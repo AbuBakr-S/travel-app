@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 const cors = require('cors');
 app.use(cors());
 
-// Initialise the main project folder
-app.use(express.static('website'));
+// Initialise the main project folder.
+app.use(express.static('dist'));
 
 // Setup server
 const port = 8000;

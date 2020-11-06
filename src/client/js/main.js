@@ -75,3 +75,5 @@ const updateUI = async () => {
         document.getElementById('errorMsg').innerHTML = 'Looks like there was a problem with the API call.';
     }
 };
+
+export {getWeather, performAction, postData, updateUI};
