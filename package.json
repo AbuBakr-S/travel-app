@@ -4,12 +4,14 @@
   "description": "## Introduction In this project, I built an asynchronous web app that uses the openweatherapp API and user data to retrieve local weather information and dynamically update the UI. I've decided to adjust the application for UK use. This involved changing the user's zip code to a postcode value as well as changing the units to metric, as here in the UK we use celcius to measure the temperature.",
   "main": "index.js",
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "babel-loader": "^8.2.1",
     "clean-webpack-plugin": "^3.0.0",
