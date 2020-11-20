@@ -38,8 +38,9 @@ app.post('/', postWeather);
 
 function postWeather (req, res){
     const data = req.body;
-    projectData["temperature"] = data.temperature;
-    projectData["date"] = data.date;
-    projectData["userResponse"] = data.userResponse;
+    console.log(data);
+    projectData["lattitude"] = data.lat;
+    projectData["longitude"] = data.lng;
+    projectData["country"] = data.countryName;
     res.send(projectData);
 }

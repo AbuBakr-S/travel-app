@@ -1,6 +1,6 @@
 // Build dynamic URL query by joining variables
-const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';       // Includes zip
-const apiKey = ',gb&units=metric&appid=6d0e16cb765e5e669c1e507ac7107a09';     // Includes gb for country and unit set to metric for temperature in celcius
+const baseURL = 'http://api.geonames.org/searchJSON?q=';       
+const apiKey = '&username=as20';     
 
 // Setup async GET request
 const getWeather = async (baseURL, postCode, apiKey) => {
@@ -30,7 +30,7 @@ const performAction = () => {
 
     getWeather(baseURL, postCode, apiKey)
     .then(function(data){
-        postData('/', {temperature: data.main.temp, date: newDate, userResponse: feeling});
+        postData('/', {lattitude: data.lat, longitude: data.lng, country: data.countryName});
     })
     .then(updateUI);
 };
@@ -66,9 +66,9 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        document.getElementById('date').innerHTML = `Today's Date: ${allData.date}`;
-        document.getElementById('temp').innerHTML = `The temperature is: ${allData.temperature} &#8451;`;
-        document.getElementById('content').innerHTML = `Feelings Log: ${allData.userResponse}`;
+        document.getElementById('date').innerHTML = `Today's Date: ${allData.lattitude}`;
+        document.getElementById('temp').innerHTML = `The temperature is: ${allData.longitude} &#8451;`;
+        document.getElementById('content').innerHTML = `Feelings Log: ${allData.country}`;
     } catch(error){
         console.log("error", error);
         // Display error message to the user if the call fails
