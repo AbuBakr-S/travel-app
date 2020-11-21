@@ -3,9 +3,9 @@ const baseURL = 'http://api.geonames.org/searchJSON?q=';
 const apiKey = '&username=as20';     
 
 // Setup async GET request
-const getWeather = async (baseURL, postCode, apiKey) => {
+const getWeather = async (baseURL, placeName, apiKey) => {
 
-    const res = await fetch(baseURL+postCode+apiKey);
+    const res = await fetch(baseURL+placeName+apiKey);
     
     try {
         const data = await res.json();
@@ -20,19 +20,22 @@ const getWeather = async (baseURL, postCode, apiKey) => {
 // Anticipate postcode as user response
 const performAction = () => {
     // User response: Post Code in UK Format
-    const postCode =  document.getElementById('postCode').value;      
+    const placeName =  document.getElementById('placeName').value;    
     // User response: Feeling
-    const feeling = document.getElementById('feelings').value;
+    //const feeling = document.getElementById('feelings').value;
 
     // UK Date Format
-    let d = new Date();
-    let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
+    //let d = new Date();
+    //let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
 
-    getWeather(baseURL, postCode, apiKey)
+    getWeather(baseURL, placeName, apiKey)
     .then(function(data){
-        postData('/', {lattitude: data.lat, longitude: data.lng, country: data.countryName});
+        console.log('data: ', data.geonames.lat, data.geonames.lng, data.geonames.countryName)
+        postData('/', {latitude: data.geonames.lat, longitude: data.geonames.lng, country: data.geonames.countryName});
     })
-    .then(updateUI);
+    .then(function(data){
+        updateUI;
+    });
 };
 
 
@@ -66,9 +69,9 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        document.getElementById('date').innerHTML = `Today's Date: ${allData.lattitude}`;
-        document.getElementById('temp').innerHTML = `The temperature is: ${allData.longitude} &#8451;`;
-        document.getElementById('content').innerHTML = `Feelings Log: ${allData.country}`;
+        document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
+        document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude} &#8451;`;
+        document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
     } catch(error){
         console.log("error", error);
         // Display error message to the user if the call fails
