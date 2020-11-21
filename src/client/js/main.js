@@ -30,13 +30,9 @@ const performAction = () => {
 
     getWeather(baseURL, postCode, apiKey)
     .then(function(data){
-        console.log('data: ', data.main.temp, newDate , feeling)
         postData('/', {temperature: data.main.temp, date: newDate, userResponse: feeling});
     })
-    .then(function(data){
-        updateUI;
-    });
-
+    .then(updateUI);
 };
 
 
