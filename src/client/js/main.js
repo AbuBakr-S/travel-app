@@ -1,22 +1,33 @@
 // Build dynamic URL query by joining variables
-const baseURL = 'http://api.geonames.org/searchJSON?q=';       
-const apiKey = '&username=as20';     
+// q = Place Name
+const baseURL = 'http://api.geonames.org/search?name='; 
+const apiKey = '&maxRows=1&type=json&username=as20';   
 
-// Setup async GET request
-const getWeather = async (baseURL, placeName, apiKey) => {
+//  Make a GET request on click
+document.getElementById('search').addEventListener('click', performAction);
 
-    const res = await fetch(baseURL+placeName+apiKey);
-    
+function performAction(e){
+    // Retrieve the user inputted place name after the user clicks the search button
+    let placeName = document.getElementById('place').value;
+    getPlaceName(baseURL, placeName, apiKey)
+}
+
+// GET Request
+const getPlaceName = async(baseURL, placeName, apiKey) => {
+    const res = await fetch(baseURL+placeName+apiKey)
     try {
-        const data = await res.json();
-        return data;
-    } catch(error){
-        console.log("error", error);
-        // Appropriately handle the error
+      const data = await res.json();
+      console.log(data.geonames[0]);
+      console.log(`Latitude: ${data.geonames[0].lat}`);
+      console.log(`Longitude: ${data.geonames[0].lng}`);
+      console.log(`Country Name: ${data.geonames[0].countryName}`);
+    } catch(error) {
+      console.log("error", error);
     }
-};
+  }
 
 
+/*
 // Anticipate postcode as user response
 const performAction = () => {
     // User response: Post Code in UK Format
@@ -40,7 +51,7 @@ const performAction = () => {
 
 
 // Add event listener
-document.getElementById('generate').addEventListener('click', performAction);
+document.getElementById('search').addEventListener('click', performAction);
 
 
 // Setup Async POST request
@@ -79,4 +90,8 @@ const updateUI = async () => {
     }
 };
 
-export {getWeather, performAction, postData, updateUI};
+export {getPlaceName, performAction, postData, updateUI};
+
+*/
+
+export {getPlaceName, performAction};
