@@ -1,44 +1,57 @@
 // Build dynamic URL query by joining variables
-const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';       // Includes zip
-const apiKey = ',gb&units=metric&appid=6d0e16cb765e5e669c1e507ac7107a09';     // Includes gb for country and unit set to metric for temperature in celcius
+// q = Place Name
+const baseURL = 'http://api.geonames.org/search?name='; 
+const apiKey = '&maxRows=1&type=json&username=as20';   
 
-// Setup async GET request
-const getWeather = async (baseURL, postCode, apiKey) => {
+//  Make a GET request on click
+document.getElementById('search').addEventListener('click', performAction);
 
-    const res = await fetch(baseURL+postCode+apiKey);
-    
+function performAction(e){
+    // Retrieve the user inputted place name after the user clicks the search button
+    let placeName = document.getElementById('place').value;
+    getPlaceName(baseURL, placeName, apiKey)
+}
+
+// GET Request
+const getPlaceName = async(baseURL, placeName, apiKey) => {
+    const res = await fetch(baseURL+placeName+apiKey)
     try {
-        const data = await res.json();
-        return data;
-    } catch(error){
-        console.log("error", error);
-        // Appropriately handle the error
+      const data = await res.json();
+      console.log(data.geonames[0]);
+      console.log(`Latitude: ${data.geonames[0].lat}`);
+      console.log(`Longitude: ${data.geonames[0].lng}`);
+      console.log(`Country Name: ${data.geonames[0].countryName}`);
+    } catch(error) {
+      console.log("error", error);
     }
-};
+  }
 
 
+/*
 // Anticipate postcode as user response
 const performAction = () => {
     // User response: Post Code in UK Format
-    const postCode =  document.getElementById('postCode').value;      
+    const placeName =  document.getElementById('placeName').value;    
     // User response: Feeling
-    const feeling = document.getElementById('feelings').value;
+    //const feeling = document.getElementById('feelings').value;
 
     // UK Date Format
-    let d = new Date();
-    let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
+    //let d = new Date();
+    //let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
 
-    getWeather(baseURL, postCode, apiKey)
+    getWeather(baseURL, placeName, apiKey)
     .then(function(data){
-        console.log('data: ', data.main.temp, newDate , feeling)
-        postData('/', {temperature: data.main.temp, date: newDate, userResponse: feeling});
+        console.log('data: ', data.geonames.lat, data.geonames.lng, data.geonames.countryName)
+        postData('/', {latitude: data.geonames.lat, longitude: data.geonames.lng, country: data.geonames.countryName});
     })
-    .then(updateUI);
+    .then(function(data){
+        updateUI;
+    });
 };
 
 
 // Add event listener
-document.getElementById('generate').addEventListener('click', performAction);
+document.getElementById('search').addEventListener('click', performAction);
 
 
 // Setup Async POST request
@@ -67,9 +80,9 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        document.getElementById('date').innerHTML = `Today's Date: ${allData.date}`;
-        document.getElementById('temp').innerHTML = `The temperature is: ${allData.temperature} &#8451;`;
-        document.getElementById('content').innerHTML = `Feelings Log: ${allData.userResponse}`;
+        document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
+        document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude} &#8451;`;
+        document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
     } catch(error){
         console.log("error", error);
         // Display error message to the user if the call fails
@@ -77,4 +90,8 @@ const updateUI = async () => {
     }
 };
 
-export {getWeather, performAction, postData, updateUI};
+export {getPlaceName, performAction, postData, updateUI};
+
+*/
+
+export {getPlaceName, performAction};

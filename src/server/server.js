@@ -22,7 +22,10 @@ app.use(express.static('dist'));
 
 // Setup server
 const port = 8000;
-app.listen(port, () => {console.log(`Running on localhost: ${port}`)});
+const server = app.listen(port, listening);
+function listening() {
+    console.log(`Running on localhost: ${port}`);
+}
 
 
 // GET route that returns the projectData object
@@ -32,14 +35,17 @@ function sendData (req, res) {
     res.send(projectData);
 };
 
-
+/*
 // POST route that adds incoming data to projectData
 app.post('/', postWeather);
 
 function postWeather (req, res){
     const data = req.body;
-    projectData["temperature"] = data.temperature;
-    projectData["date"] = data.date;
-    projectData["userResponse"] = data.userResponse;
-    res.send(projectData);
+    console.log(data);
+    projectData["latitude"] = data.geonames.lat;
+    projectData["longitude"] = data.geonames.lng;
+    projectData["country"] = data.geonames.countryName;
+   res.send(projectData);
+   console.log(projectData);
 }
+*/
