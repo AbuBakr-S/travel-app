@@ -10,14 +10,25 @@ function performAction(e){
     // Retrieve the user inputted place name after the user clicks the search button
     let placeName = document.getElementById('place').value;
 
-    // Retrieve the user inputted departure date
-    let departureDate = document.getElementById('departure-date').value;
+    
+    // Calculate whether the trip is within a week
+    // Date of user submission in milliseconds
+    let d1 = Date.now();
+    console.log(d1);
 
-    // UK Date Format
-    let d = new Date();
-    let newDate = d.getDate() +'-'+ (d.getMonth()+1) +'-'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
-    console.log(`Current Date: ${newDate}`);
-    console.log(`Departure Date: ${departureDate}`);
+    // Date of departure in milliseconds
+    let d = new Date(document.getElementById("departure-date").value);
+    let d2 = Date.parse(d);
+    console.log(d2);
+
+    let difference = d2 - d1;
+    console.log(difference);
+    
+    if (difference < 604800000) {
+        console.log('Within a week. Provide current weather forecast');
+    } else {
+        console.log('More than 1 week. Proivide predicted weather forecast');
+    }
 
     getPlaceName(baseURL, placeName, apiKey);
 }
