@@ -10,10 +10,14 @@ function performAction(e){
     // Retrieve the user inputted place name after the user clicks the search button
     let placeName = document.getElementById('place').value;
 
+    // Retrieve the user inputted departure date
+    let departureDate = document.getElementById('departure-date').value;
+
     // UK Date Format
     let d = new Date();
-    let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
-    console.log(newDate);
+    let newDate = d.getDate() +'-'+ (d.getMonth()+1) +'-'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
+    console.log(`Current Date: ${newDate}`);
+    console.log(`Departure Date: ${departureDate}`);
 
     getPlaceName(baseURL, placeName, apiKey);
 }
