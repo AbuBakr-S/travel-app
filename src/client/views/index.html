@@ -11,20 +11,17 @@
             <div class="holder headline">
                 <h1>Location Finder</h1>
             </div>
-            <div class="holder place">
-                <label class="heading" for="place">Enter A Place Name:</label>
-                <input class="myInput" type="text" id="place" placeholder="Example: London">
+            <div class="holder details">
+                <form>
+                    <label class="heading" for="place">Enter A Place Name:</label>
+                    <input class="myInput" type="text" id="place" name="place" placeholder="Example: London"><br>
+                    <label class="heading" for="date">Departure Date:</label>
+                    <input class="myInput" type="text" id="departure-date" name="departure-date"><br>
+                    <input type="submit" value="Submit">
+                </form>
             </div>
-            <!--
-            <div class="holder feel">
-                <label class="heading" for="feelings">How are you feeling today?</label>
-                <textarea class="myInput" id="feelings" placeholder="Enter your feelings here"></textarea>
 
-            </div>
-            -->
-            <button id="search" type="submit">Search</button>
-
-            <div class="holder entry">
+            <div class="holder output">
                 <div class="heading title">Most Recent Entry:</div>
                 <div id="entryHolder">
                     <!-- Data placeholder -->
