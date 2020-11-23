@@ -9,7 +9,13 @@ document.getElementById('search').addEventListener('click', performAction);
 function performAction(e){
     // Retrieve the user inputted place name after the user clicks the search button
     let placeName = document.getElementById('place').value;
-    getPlaceName(baseURL, placeName, apiKey)
+
+    // UK Date Format
+    let d = new Date();
+    let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
+    console.log(newDate);
+
+    getPlaceName(baseURL, placeName, apiKey);
 }
 
 // GET Request
@@ -24,7 +30,7 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     } catch(error) {
       console.log("error", error);
     }
-  }
+}
 
 
 /*
@@ -34,10 +40,6 @@ const performAction = () => {
     const placeName =  document.getElementById('placeName').value;    
     // User response: Feeling
     //const feeling = document.getElementById('feelings').value;
-
-    // UK Date Format
-    //let d = new Date();
-    //let newDate = d.getDate() +'.'+ (d.getMonth()+1) +'.'+ d.getFullYear();     // getMonth() returns the month (0–11). Add 1 to adjust.
 
     getWeather(baseURL, placeName, apiKey)
     .then(function(data){
