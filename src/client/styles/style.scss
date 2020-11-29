@@ -2,7 +2,6 @@ body {
     margin: 0 auto;
     font-family: 'Anton', sans-serif;
     letter-spacing: 1px;
-    background-image: url("../assets/hero.jpg");
 }
 
 #app {
@@ -12,6 +11,11 @@ body {
     position: relative;
     background-color:#f9c102;
     max-width: 1000px;
+}
+
+img {
+    height: auto;
+    width: 80%;
 }
 
 .holder {
