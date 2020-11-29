@@ -35,17 +35,15 @@ function sendData (req, res) {
     res.send(projectData);
 };
 
-/*
 // POST route that adds incoming data to projectData
 app.post('/', postWeather);
 
 function postWeather (req, res){
     const data = req.body;
     console.log(data);
-    projectData["latitude"] = data.geonames.lat;
-    projectData["longitude"] = data.geonames.lng;
+    projectData["latitude"] = data.geonames[0].lat;
+    projectData["longitude"] = data.geonames[0].lng;
     projectData["country"] = data.geonames.countryName;
    res.send(projectData);
    console.log(projectData);
 }
-*/
