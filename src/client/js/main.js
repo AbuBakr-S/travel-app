@@ -52,7 +52,9 @@ function performAction(e){
         console.log('data: ', data);
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
-    .then(updateUI);
+    .then(function(data){
+        updateUI;
+    });
 }
 
 // Setup Async POST request
