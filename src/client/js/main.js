@@ -12,10 +12,10 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     const res = await fetch(baseURL+placeName+apiKey)
     try {
       const data = await res.json();
-      console.log(data.geonames[0]);
       console.log(`Latitude: ${data.geonames[0].lat}`);
       console.log(`Longitude: ${data.geonames[0].lng}`);
       console.log(`Country Name: ${data.geonames[0].countryName}`);
+      return data;
     } catch(error) {
       console.log("error", error);
     }
@@ -50,7 +50,9 @@ function performAction(e){
     .then(function(data){
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
-    .then(updateUI);
+    .then(function(data){
+        updateUI;
+    });
 }
 
 // Setup Async POST request
