@@ -12,7 +12,6 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     const res = await fetch(baseURL+placeName+apiKey)
     try {
       const data = await res.json();
-      console.log(data.geonames[0]);
       console.log(`Latitude: ${data.geonames[0].lat}`);
       console.log(`Longitude: ${data.geonames[0].lng}`);
       console.log(`Country Name: ${data.geonames[0].countryName}`);
@@ -49,7 +48,6 @@ function performAction(e){
 
     getPlaceName(baseURL, placeName, apiKey)
     .then(function(data){
-        console.log('data: ', data);
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
     .then(function(data){

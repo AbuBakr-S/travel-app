@@ -39,11 +39,10 @@ function sendData (req, res) {
 app.post('/', postWeather);
 
 function postWeather (req, res){
-    const data = req.body;
-    console.log(data);
-    projectData["latitude"] = data.geonames[0].lat;
-    projectData["longitude"] = data.geonames[0].lng;
-    projectData["country"] = data.geonames.countryName;
-   res.send(projectData);
-   console.log(projectData);
+    let data = req.body;
+    console.log('data from server: ', data);
+    projectData["latitude"] = data.latitude;
+    projectData["longitude"] = data.longitude;
+    projectData["country"] = data.country;
+    res.send(projectData);
 }
