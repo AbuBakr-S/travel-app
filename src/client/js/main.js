@@ -16,6 +16,7 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
       console.log(`Latitude: ${data.geonames[0].lat}`);
       console.log(`Longitude: ${data.geonames[0].lng}`);
       console.log(`Country Name: ${data.geonames[0].countryName}`);
+      return data;
     } catch(error) {
       console.log("error", error);
     }
@@ -48,6 +49,7 @@ function performAction(e){
 
     getPlaceName(baseURL, placeName, apiKey)
     .then(function(data){
+        console.log('data: ', data);
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
     .then(updateUI);
