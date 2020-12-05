@@ -37,7 +37,8 @@ const getCurrentWeather = async(weatherbitBaseURL, weatherbitGetRequest) => {
     const res = await fetch(weatherbitBaseURL+weatherbitGetRequest)
     try {
       const data = await res.json();
-      console.log(data);
+      console.log(data.data[0].weather.description);
+      console.log(data.data[0].temp);
       return data;
     } catch(error) {
       console.log("error", error);
