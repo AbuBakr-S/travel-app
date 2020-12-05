@@ -26,7 +26,6 @@ function performAction(e){
     // Retrieve the user inputted place name after the user clicks the search button
     let placeName = document.getElementById('place').value;
 
-    
     // Calculate whether the trip is within a week
     // Date of user submission in milliseconds
     let d1 = Date.now();
@@ -55,6 +54,7 @@ function performAction(e){
     });
 }
 
+
 // Setup Async POST request
 const postData = async (url = '', data = {})=>{
     const response = await fetch(url, {
@@ -76,37 +76,12 @@ const postData = async (url = '', data = {})=>{
 };
 
 
-/*
-// Anticipate postcode as user response
-const performAction = () => {
-    // User response: Post Code in UK Format
-    const placeName =  document.getElementById('placeName').value;    
-    // User response: Feeling
-    //const feeling = document.getElementById('feelings').value;
-
-    getWeather(baseURL, placeName, apiKey)
-    .then(function(data){
-        console.log('data: ', data.geonames.lat, data.geonames.lng, data.geonames.countryName)
-        postData('/', {latitude: data.geonames.lat, longitude: data.geonames.lng, country: data.geonames.countryName});
-    })
-    .then(function(data){
-        updateUI;
-    });
-};
-
-
-// Add event listener
-document.getElementById('search').addEventListener('click', performAction);
-*/
-
-
-
-
 // Update UI
 const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
+        console.log(allData);
         document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
@@ -116,5 +91,6 @@ const updateUI = async () => {
         document.getElementById('errorMsg').innerHTML = 'Looks like there was a problem with the API call.';
     }
 };
+
 
 export {getPlaceName, performAction};
