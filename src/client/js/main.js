@@ -4,7 +4,6 @@ const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
 
-
 // Weatherbit API call
 const weatherbitBaseURL = 'http://api.weatherbit.io/v2.0';
 let weatherbitLat = '51.51210888110816';
@@ -79,6 +78,7 @@ function performAction(e){
     });
 }
 
+
 // Setup Async POST request
 const postData = async (url = '', data = {})=>{
     const response = await fetch(url, {
@@ -100,32 +100,6 @@ const postData = async (url = '', data = {})=>{
 };
 
 
-/*
-// Anticipate postcode as user response
-const performAction = () => {
-    // User response: Post Code in UK Format
-    const placeName =  document.getElementById('placeName').value;    
-    // User response: Feeling
-    //const feeling = document.getElementById('feelings').value;
-
-    getWeather(baseURL, placeName, apiKey)
-    .then(function(data){
-        console.log('data: ', data.geonames.lat, data.geonames.lng, data.geonames.countryName)
-        postData('/', {latitude: data.geonames.lat, longitude: data.geonames.lng, country: data.geonames.countryName});
-    })
-    .then(function(data){
-        updateUI;
-    });
-};
-
-
-// Add event listener
-document.getElementById('search').addEventListener('click', performAction);
-*/
-
-
-
-
 // Update UI
 const updateUI = async () => {
     const request = await fetch('/all');
@@ -140,5 +114,6 @@ const updateUI = async () => {
         document.getElementById('errorMsg').innerHTML = 'Looks like there was a problem with the API call.';
     }
 };
+
 
 export {getPlaceName, performAction};
