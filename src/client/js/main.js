@@ -49,9 +49,7 @@ function performAction(e){
     .then(function(data){
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
-    .then(function(data){
-        updateUI;
-    });
+    .then(updateUI);
 }
 
 
