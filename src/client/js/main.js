@@ -75,9 +75,7 @@ function performAction(e){
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
     .then(getCurrentWeather(weatherbitBaseURL, weatherbitGetRequest))
-    .then(function(data){
-        updateUI;
-    });
+    .then(updateUI);
 }
 
 
