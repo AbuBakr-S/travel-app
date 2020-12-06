@@ -5,14 +5,19 @@ const apiKey = '&maxRows=1&type=json&username=as20';
 
 
 // Weatherbit API call
-const weatherbitBaseURL = 'http://api.weatherbit.io/v2.0';
-//let weatherbitLat = '51.51210888110816';
-//let weatherbitLon = '-0.12804098430341104';
-let weatherbitLat;
-let weatherbitLon;
-const weatherbitApiKey = '8fcdb754804e4825afbd72eb47d12818';
-let weatherbitGetRequest = `/current?lat=${weatherbitLat}&lon=${weatherbitLon}&key=${weatherbitApiKey}`;
+var myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
+//myUrlWithParams.searchParams.append("lat", "51.51210888110816");
+//myUrlWithParams.searchParams.append("lon", "-0.12804098430341104");
+//myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
+//console.log(myUrlWithParams.href);
+
+
+/*
+let weatherbitBaseURL = `http://api.weatherbit.io/v2.0/current?`;
+let query = `lat=${lat}&lon=${lon}&key=`;
+let key = '8fcdb754804e4825afbd72eb47d12818';
 // Example URL: https://api.weatherbit.io/v2.0/current?lat=51.51210888110816&lon=-0.12804098430341104&key=8fcdb754804e4825afbd72eb47d12818
+*/
 
 
 //  Make a GET request on click
@@ -38,9 +43,13 @@ const getLocation = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        let location = {lat:allData.latitude, lon:allData.longitude};
-        console.log(location);
-        return location;
+        //var location = {lat:allData.latitude, lon:allData.longitude};
+        console.log(allData);
+        myUrlWithParams.searchParams.append("lat", allData.latitude);
+        myUrlWithParams.searchParams.append("lon", allData.longitude);
+        //console.log(location);
+        //return location;
+        return myUrlWithParams;
     } catch(error){
         console.log("error", error);
     }
@@ -48,8 +57,10 @@ const getLocation = async () => {
 
 
 //Weatherbit GET Request
-const getCurrentWeather = async(weatherbitBaseURL, weatherbitGetRequest) => {
-    const res = await fetch(weatherbitBaseURL+weatherbitGetRequest)
+const getCurrentWeather = async(myUrlWithParams) => {
+    myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
+    myUrlWithParams.href;
+    const res = await fetch(myUrlWithParams)
     try {
       const data = await res.json();
       console.log(data.data[0].weather.description);
@@ -90,11 +101,9 @@ function performAction(e){
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
     .then(getLocation)
-    .then(function(){
-        weatherbitLat = location.lat;
-        weatherbitLon = location.lon;
-        getCurrentWeather(weatherbitBaseURL, weatherbitGetRequest, weatherbitLat, weatherbitLon);
-    })
+    .then(
+        getCurrentWeather(myUrlWithParams)
+    )
     .then(updateUI);
 }
 
