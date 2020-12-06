@@ -6,8 +6,10 @@ const apiKey = '&maxRows=1&type=json&username=as20';
 
 // Weatherbit API call
 const weatherbitBaseURL = 'http://api.weatherbit.io/v2.0';
-let weatherbitLat = '51.51210888110816';
-let weatherbitLon = '-0.12804098430341104';
+//let weatherbitLat = '51.51210888110816';
+//let weatherbitLon = '-0.12804098430341104';
+let weatherbitLat;
+let weatherbitLon;
 const weatherbitApiKey = '8fcdb754804e4825afbd72eb47d12818';
 let weatherbitGetRequest = `/current?lat=${weatherbitLat}&lon=${weatherbitLon}&key=${weatherbitApiKey}`;
 // Example URL: https://api.weatherbit.io/v2.0/current?lat=51.51210888110816&lon=-0.12804098430341104&key=8fcdb754804e4825afbd72eb47d12818
@@ -30,6 +32,19 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
       console.log("error", error);
     }
 }
+
+// Update UI
+const getLocation = async () => {
+    const request = await fetch('/all');
+    try {
+        const allData = await request.json();
+        let location = {lat:allData.latitude, lon:allData.longitude};
+        console.log(location);
+        return location;
+    } catch(error){
+        console.log("error", error);
+    }
+};
 
 
 //Weatherbit GET Request
@@ -74,7 +89,12 @@ function performAction(e){
     .then(function(data){
         postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     })
-    .then(getCurrentWeather(weatherbitBaseURL, weatherbitGetRequest))
+    .then(getLocation)
+    .then(function(){
+        weatherbitLat = location.lat;
+        weatherbitLon = location.lon;
+        getCurrentWeather(weatherbitBaseURL, weatherbitGetRequest, weatherbitLat, weatherbitLon);
+    })
     .then(updateUI);
 }
 
