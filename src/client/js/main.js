@@ -38,7 +38,7 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     }
 }
 
-// Update UI
+// Build Weatherbit API URL
 const getLocation = async () => {
     const request = await fetch('/all');
     try {
