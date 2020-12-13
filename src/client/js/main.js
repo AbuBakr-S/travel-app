@@ -72,7 +72,7 @@ const getCurrentWeather = async(myUrlWithParams) => {
 }
 
 
-function performAction(e){
+async function performAction(e) {
     // Retrieve the user inputted place name after the user clicks the search button
     let placeName = document.getElementById('place').value;
 
@@ -96,15 +96,11 @@ function performAction(e){
         console.log('More than 1 week. Proivide predicted weather forecast');
     }
 
-    getPlaceName(baseURL, placeName, apiKey)
-    .then(function(data){
-        postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
-    })
-    .then(getLocation)
-    .then(
-        getCurrentWeather(myUrlWithParams)
-    )
-    .then(updateUI);
+    const data = await getPlaceName(baseURL, placeName, apiKey)
+    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName})
+    await getLocation()
+    await getCurrentWeather(myUrlWithParams)
+    await updateUI();
 }
 
 
