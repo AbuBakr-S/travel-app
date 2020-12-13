@@ -3,22 +3,8 @@
 const baseURL = 'http://api.geonames.org/search?name='; 
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
-
 // Weatherbit API call
 var myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
-//myUrlWithParams.searchParams.append("lat", "51.51210888110816");
-//myUrlWithParams.searchParams.append("lon", "-0.12804098430341104");
-//myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
-//console.log(myUrlWithParams.href);
-
-
-/*
-let weatherbitBaseURL = `http://api.weatherbit.io/v2.0/current?`;
-let query = `lat=${lat}&lon=${lon}&key=`;
-let key = '8fcdb754804e4825afbd72eb47d12818';
-// Example URL: https://api.weatherbit.io/v2.0/current?lat=51.51210888110816&lon=-0.12804098430341104&key=8fcdb754804e4825afbd72eb47d12818
-*/
-
 
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
@@ -43,12 +29,9 @@ const getLocation = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        //var location = {lat:allData.latitude, lon:allData.longitude};
         console.log(allData);
         myUrlWithParams.searchParams.append("lat", allData.latitude);
         myUrlWithParams.searchParams.append("lon", allData.longitude);
-        //console.log(location);
-        //return location;
         return myUrlWithParams;
     } catch(error){
         console.log("error", error);
