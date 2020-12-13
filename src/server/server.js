@@ -44,5 +44,8 @@ function postWeather (req, res){
     projectData["latitude"] = data.latitude;
     projectData["longitude"] = data.longitude;
     projectData["country"] = data.country;
+    // TODO: Add Weather and Temperature to projectData endpoint
+    //projectData["weather"] = data.weather;
+    //projectData["temperature"] = data.temperature;
     res.send(projectData);
 }
