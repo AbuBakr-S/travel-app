@@ -4,7 +4,7 @@ const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
 // Weatherbit API call
-var myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
+const myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
 
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
