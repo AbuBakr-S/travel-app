@@ -58,9 +58,7 @@ const getCurrentWeather = async(myUrlWithParams) => {
 async function performAction(e) {
     // Retrieve the place name
     let placeName = document.getElementById('place').value;
-
     tripCountdown();
-
     const data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     await getLocation();
@@ -71,7 +69,6 @@ async function performAction(e) {
 
 // Calculate whether the trip is within a week
 const tripCountdown = () => {
-
     // Date of user submission in milliseconds
     let d1 = Date.now();
     console.log(d1);
@@ -89,7 +86,6 @@ const tripCountdown = () => {
     } else {
         console.log('More than 1 week. Proivide predicted weather forecast');
     }
-
 }
 
 
