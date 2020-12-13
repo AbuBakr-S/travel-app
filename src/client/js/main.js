@@ -11,7 +11,7 @@ document.getElementById('search').addEventListener('click', performAction);
 
 // Geonames - GET Request
 const getPlaceName = async(baseURL, placeName, apiKey) => {
-    const res = await fetch(baseURL+placeName+apiKey)
+    const res = await fetch(baseURL+placeName+apiKey);
     try {
       const data = await res.json();
       console.log(`Latitude: ${data.geonames[0].lat}`);
@@ -32,7 +32,7 @@ const getLocation = async () => {
         myUrlWithParams.searchParams.append("lat", allData.latitude);
         myUrlWithParams.searchParams.append("lon", allData.longitude);
         return myUrlWithParams;
-    } catch(error){
+    } catch(error) {
         console.log("error", error);
     }
 };
@@ -42,7 +42,7 @@ const getLocation = async () => {
 const getCurrentWeather = async(myUrlWithParams) => {
     myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
     myUrlWithParams.href;
-    const res = await fetch(myUrlWithParams)
+    const res = await fetch(myUrlWithParams);
     try {
       const data = await res.json();
       console.log(data.data[0].weather.description);
@@ -61,10 +61,10 @@ async function performAction(e) {
 
     tripCountdown();
 
-    const data = await getPlaceName(baseURL, placeName, apiKey)
-    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName})
-    await getLocation()
-    await getCurrentWeather(myUrlWithParams)
+    const data = await getPlaceName(baseURL, placeName, apiKey);
+    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
+    await getLocation();
+    await getCurrentWeather(myUrlWithParams);
     await updateUI();
 }
 
@@ -107,7 +107,7 @@ const postData = async (url = '', data = {})=>{
     try {
         const newData = await response.json();
         return newData;
-    }catch(error){
+    } catch(error) {
         console.log("error", error);
         // Appropriately handle the error
     }
@@ -122,7 +122,7 @@ const updateUI = async () => {
         document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
-    } catch(error){
+    } catch(error) {
         console.log("error", error);
         // Display error message to the user if the call fails
         document.getElementById('errorMsg').innerHTML = 'Looks like there was a problem with the API call.';
