@@ -1,5 +1,4 @@
-// Build dynamic URL query by joining variables
-// q = Place Name
+// Geonames API call
 const baseURL = 'http://api.geonames.org/search?name='; 
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
@@ -10,7 +9,7 @@ const myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
 document.getElementById('search').addEventListener('click', performAction);
 
 
-// GET Request
+// Geonames - GET Request
 const getPlaceName = async(baseURL, placeName, apiKey) => {
     const res = await fetch(baseURL+placeName+apiKey)
     try {
@@ -24,7 +23,7 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     }
 }
 
-// Build Weatherbit API URL
+// Weatherbit - Build API URL
 const getLocation = async () => {
     const request = await fetch('/all');
     try {
@@ -39,7 +38,7 @@ const getLocation = async () => {
 };
 
 
-//Weatherbit GET Request
+// Weatherbit - GET Request
 const getCurrentWeather = async(myUrlWithParams) => {
     myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
     myUrlWithParams.href;
@@ -55,12 +54,24 @@ const getCurrentWeather = async(myUrlWithParams) => {
 }
 
 
+// Function triggered once the user has submitted input values
 async function performAction(e) {
-    // Retrieve the user inputted place name after the user clicks the search button
+    // Retrieve the place name
     let placeName = document.getElementById('place').value;
 
-    
-    // Calculate whether the trip is within a week
+    tripCountdown();
+
+    const data = await getPlaceName(baseURL, placeName, apiKey)
+    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName})
+    await getLocation()
+    await getCurrentWeather(myUrlWithParams)
+    await updateUI();
+}
+
+
+// Calculate whether the trip is within a week
+const tripCountdown = () => {
+
     // Date of user submission in milliseconds
     let d1 = Date.now();
     console.log(d1);
@@ -79,11 +90,6 @@ async function performAction(e) {
         console.log('More than 1 week. Proivide predicted weather forecast');
     }
 
-    const data = await getPlaceName(baseURL, placeName, apiKey)
-    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName})
-    await getLocation()
-    await getCurrentWeather(myUrlWithParams)
-    await updateUI();
 }
 
 
