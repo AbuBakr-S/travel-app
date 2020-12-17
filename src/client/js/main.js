@@ -59,10 +59,10 @@ async function performAction(e) {
     // Retrieve the place name
     let placeName = document.getElementById('place').value;
     tripCountdown();
-    const data = await getPlaceName(baseURL, placeName, apiKey);
+    let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     await getLocation();
-    await getCurrentWeather(myUrlWithParams);
+    data = await getCurrentWeather(myUrlWithParams);
     await postData('/', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
     await updateUI();
 }
