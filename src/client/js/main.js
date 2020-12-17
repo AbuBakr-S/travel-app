@@ -60,10 +60,10 @@ async function performAction(e) {
     let placeName = document.getElementById('place').value;
     tripCountdown();
     let data = await getPlaceName(baseURL, placeName, apiKey);
-    await postData('/', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
+    await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     await getLocation();
     data = await getCurrentWeather(myUrlWithParams);
-    await postData('/', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+    await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
     await updateUI();
 }
 
@@ -119,6 +119,8 @@ const updateUI = async () => {
         document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
+        document.getElementById('weather').innerHTML = `The Weather is: ${allData.weather}`;
+        document.getElementById('temperature').innerHTML = `The Current Temperature is: ${allData.temperature}`;
     } catch(error) {
         console.log("error", error);
         // Display error message to the user if the call fails

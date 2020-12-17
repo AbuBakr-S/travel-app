@@ -32,20 +32,30 @@ function listening() {
 app.get('/all', sendData);
 
 function sendData (req, res) {
+    console.log(projectData);
     res.send(projectData);
 };
 
 // POST route that adds incoming data to projectData
-app.post('/', postWeather);
+app.post('/place', postPlace);
 
-function postWeather (req, res){
+function postPlace (req, res){
     let data = req.body;
     console.log('data from server: ', data);
     projectData["latitude"] = data.latitude;
     projectData["longitude"] = data.longitude;
     projectData["country"] = data.country;
+    res.send(projectData);
+}
+
+
+// POST route that adds incoming data to projectData
+app.post('/weather', postWeather);
+
+function postWeather (req, res){
+    let data = req.body;
     // TODO: Add Weather and Temperature to projectData endpoint
-    //projectData["weather"] = data.weather;
-    //projectData["temperature"] = data.temperature;
+    projectData["weather"] = data.weather;
+    projectData["temperature"] = data.temperature;
     res.send(projectData);
 }
