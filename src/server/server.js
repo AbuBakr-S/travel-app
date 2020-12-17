@@ -20,6 +20,7 @@ app.use(cors());
 // Initialise the main project folder.
 app.use(express.static('dist'));
 
+
 // Setup server
 const port = 8000;
 const server = app.listen(port, listening);
@@ -28,20 +29,12 @@ function listening() {
 }
 
 
-// GET route that returns the projectData object
-app.get('/all', sendData);
-
-function sendData (req, res) {
-    console.log(projectData);
-    res.send(projectData);
-};
-
 // POST route that adds incoming data to projectData
 app.post('/place', postPlace);
 
 function postPlace (req, res){
     let data = req.body;
-    console.log('data from server: ', data);
+    //console.log('data from server: ', data);
     projectData["latitude"] = data.latitude;
     projectData["longitude"] = data.longitude;
     projectData["country"] = data.country;
@@ -59,3 +52,12 @@ function postWeather (req, res){
     projectData["temperature"] = data.temperature;
     res.send(projectData);
 }
+
+
+// GET route that returns the projectData object
+app.get('/all', sendData);
+
+function sendData (req, res) {
+    console.log(projectData);
+    res.send(projectData);
+};

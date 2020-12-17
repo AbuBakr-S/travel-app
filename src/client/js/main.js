@@ -14,21 +14,18 @@ const getPlaceName = async(baseURL, placeName, apiKey) => {
     const res = await fetch(baseURL+placeName+apiKey);
     try {
       const data = await res.json();
-      console.log(`Latitude: ${data.geonames[0].lat}`);
-      console.log(`Longitude: ${data.geonames[0].lng}`);
-      console.log(`Country Name: ${data.geonames[0].countryName}`);
       return data;
     } catch(error) {
       console.log("error", error);
     }
 }
 
+
 // Weatherbit - Build API URL
 const getLocation = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        console.log(allData);
         myUrlWithParams.searchParams.append("lat", allData.latitude);
         myUrlWithParams.searchParams.append("lon", allData.longitude);
         return myUrlWithParams;
@@ -45,8 +42,6 @@ const getCurrentWeather = async(myUrlWithParams) => {
     const res = await fetch(myUrlWithParams);
     try {
       const data = await res.json();
-      console.log(data.data[0].weather.description);
-      console.log(data.data[0].temp);
       return data;
     } catch(error) {
       console.log("error", error);
@@ -72,15 +67,12 @@ async function performAction(e) {
 const tripCountdown = () => {
     // Date of user submission in milliseconds
     let d1 = Date.now();
-    console.log(d1);
 
     // Date of departure in milliseconds
     let d = new Date(document.getElementById("departure-date").value);
     let d2 = Date.parse(d);
-    console.log(d2);
 
     let difference = d2 - d1;
-    console.log(difference);
     
     if (difference < 604800000) {
         console.log('Within a week. Provide current weather forecast');
