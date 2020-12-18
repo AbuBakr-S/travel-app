@@ -54,6 +54,18 @@ function postWeather (req, res){
 }
 
 
+// POST route that adds incoming data to projectData
+app.post('/forecastWeather', postForecastWeather);
+
+function postForecastWeather (req, res){
+    let data = req.body;
+    // TODO: Add Weather and Temperature to projectData endpoint
+    projectData["forecastWeather"] = data.weather;
+    projectData["forecastTemperature"] = data.temperature;
+    res.send(projectData);
+}
+
+
 // GET route that returns the projectData object
 app.get('/all', sendData);
 

@@ -3,7 +3,8 @@ const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
 // Weatherbit API call
-let myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
+let currentWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/current');
+let forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily'); // Example: http://api.weatherbit.io/v2.0/forecast/daily?lat=51.509865&lon=-0.118092&key=8fcdb754804e4825afbd72eb47d12818
 
 // Countdown Tracker
 let withinAWeek;
@@ -50,9 +51,11 @@ const getLocation = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        myUrlWithParams.searchParams.append("lat", allData.latitude);
-        myUrlWithParams.searchParams.append("lon", allData.longitude);
-        return myUrlWithParams;
+        currentWeatherBaseURL.searchParams.append("lat", allData.latitude);
+        currentWeatherBaseURL.searchParams.append("lon", allData.longitude);
+        forecastWeatherBaseURL.searchParams.append("lat", allData.latitude);
+        forecastWeatherBaseURL.searchParams.append("lon", allData.longitude);
+        return currentWeatherBaseURL;
     } catch(error) {
         console.log("error", error);
     }
@@ -60,10 +63,24 @@ const getLocation = async () => {
 
 
 // Weatherbit - GET Request
-const getCurrentWeather = async(myUrlWithParams) => {
-    myUrlWithParams.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
-    myUrlWithParams.href;
-    const res = await fetch(myUrlWithParams);
+const getCurrentWeather = async(currentWeatherBaseURL) => {
+    currentWeatherBaseURL.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
+    currentWeatherBaseURL.href;
+    const res = await fetch(currentWeatherBaseURL);
+    try {
+      const data = await res.json();
+      return data;
+    } catch(error) {
+      console.log("error", error);
+    }
+}
+
+
+// Weatherbit - GET Request
+const getForecastWeather = async(forecastWeatherBaseURL) => {
+    forecastWeatherBaseURL.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
+    forecastWeatherBaseURL.href;
+    const res = await fetch(forecastWeatherBaseURL);
     try {
       const data = await res.json();
       return data;
@@ -78,14 +95,17 @@ async function performAction(e) {
     // Retrieve the place name
     let placeName = document.getElementById('place').value;
     // Reset URL to prevent apending values from additional submissions
-    myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
+    currentWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/current');
+    forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily');
     tripCountdown();
     console.log(`The Trip is Within a Week: ${withinAWeek}`);
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     await getLocation();
-    data = await getCurrentWeather(myUrlWithParams);
+    data = await getCurrentWeather(currentWeatherBaseURL);
     await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+    data = await getForecastWeather(forecastWeatherBaseURL);
+    await postData('/forecastWeather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
     await updateUI();
 }
 
@@ -142,6 +162,8 @@ const updateUI = async () => {
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
         document.getElementById('weather').innerHTML = `The Weather is: ${allData.weather}`;
         document.getElementById('temperature').innerHTML = `The Current Temperature is: ${allData.temperature}`;
+        document.getElementById('forecast-weather').innerHTML = `The Forecasted Weather is: ${allData.forecastWeather}`;
+        document.getElementById('forecast-temperature').innerHTML = `The Forecasted Temperature is: ${allData.forecastTemperature}`;
     } catch(error) {
         console.log("error", error);
         // Display error message to the user if the call fails
