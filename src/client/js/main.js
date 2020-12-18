@@ -12,7 +12,7 @@ let withinAWeek;
 // Set Minimum Date on Date Picker to Present Day
 (() => {
     // Set Min Departure Date on Calendar
-    const date = new Date()
+    const date = new Date();
 
     const year = date.getFullYear();
     console.log(year);
