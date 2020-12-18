@@ -55,7 +55,6 @@ const getLocation = async () => {
         currentWeatherBaseURL.searchParams.append("lon", allData.longitude);
         forecastWeatherBaseURL.searchParams.append("lat", allData.latitude);
         forecastWeatherBaseURL.searchParams.append("lon", allData.longitude);
-        return currentWeatherBaseURL;
     } catch(error) {
         console.log("error", error);
     }
