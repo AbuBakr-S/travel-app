@@ -5,6 +5,30 @@ const apiKey = '&maxRows=1&type=json&username=as20';
 // Weatherbit API call
 let myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
 
+// Countdown Tracker
+let withinAWeek;
+
+// Set Minimum Date on Date Picker to Present Day
+(() => {
+    // Set Min Departure Date on Calendar
+    const date = new Date()
+
+    const year = date.getFullYear();
+    console.log(year);
+
+    const month = date.getMonth() + 1;
+    console.log(month + 1);
+
+    const dateNum = date.getDate();
+    console.log(dateNum);
+
+    // Build Date Satring
+    const dateString = `${year}-${month}-${dateNum}`;
+    console.log(dateString);
+
+    document.getElementById('departure-date').setAttribute('min', dateString);
+})();
+
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
 
@@ -56,6 +80,7 @@ async function performAction(e) {
     // Reset URL to prevent apending values from additional submissions
     myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
     tripCountdown();
+    console.log(`The Trip is Within a Week: ${withinAWeek}`);
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
     await getLocation();
@@ -77,9 +102,11 @@ const tripCountdown = () => {
     let difference = d2 - d1;
     
     if (difference < 604800000) {
-        console.log('Within a week. Provide current weather forecast');
+        //console.log('Within a week. Provide current weather forecast');
+        return withinAWeek = true;
     } else {
-        console.log('More than 1 week. Proivide predicted weather forecast');
+        //console.log('More than 1 week. Proivide predicted weather forecast');
+        return withinAWeek = false;
     }
 }
 
