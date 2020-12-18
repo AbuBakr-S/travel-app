@@ -23,11 +23,33 @@ let withinAWeek;
     const dateNum = date.getDate();
     console.log(dateNum);
 
+    // Set Max Departure Date on Calendar
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 16);
+
+    // So you can see the date we have created
+    console.log(futureDate);
+
+    const date2 = futureDate.getDate();
+    const month2 = futureDate.getMonth() + 1; // 0 is January, so we must add 1
+    const year2 = futureDate.getFullYear();
+
+
+    const formattedNumber = ("0" + date2).slice(-2);
+    console.log(formattedNumber);
+
+    const formattedNumber2 = ("0" + month2).slice(-2);
+    console.log(formattedNumber);
+
+
     // Build Date Satring
     const dateString = `${year}-${month}-${dateNum}`;
     console.log(dateString);
+    const dateString2 = `${year2}-${formattedNumber2}-${formattedNumber}`;
+    console.log(dateString2);
 
     document.getElementById('departure-date').setAttribute('min', dateString);
+    document.getElementById('departure-date').setAttribute('max', dateString2);
 })();
 
 //  Make a GET request on click
