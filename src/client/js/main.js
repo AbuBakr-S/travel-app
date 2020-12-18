@@ -3,7 +3,7 @@ const baseURL = 'http://api.geonames.org/search?name=';
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
 // Weatherbit API call
-const myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
+let myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
 
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
@@ -53,6 +53,8 @@ const getCurrentWeather = async(myUrlWithParams) => {
 async function performAction(e) {
     // Retrieve the place name
     let placeName = document.getElementById('place').value;
+    // Reset URL to prevent apending values from additional submissions
+    myUrlWithParams = new URL ('http://api.weatherbit.io/v2.0/current');
     tripCountdown();
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
