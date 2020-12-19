@@ -15,44 +15,44 @@ let withinAWeek;
 (() => {
     //##### SANITISE DATE #####
     const dateNow = new Date();
-const currentYear = dateNow.getFullYear();
-const currentMonth = dateNow.getMonth() + 1;
-const currentDate = dateNow.getDate();
+    const currentYear = dateNow.getFullYear();
+    const currentMonth = dateNow.getMonth() + 1;
+    const currentDate = dateNow.getDate();
 
-// Set Max Departure Date on Calendar
-const departFuture = dateNow.setDate(dateNow.getDate() + 16);
+    // Set Max Departure Date on Calendar
+    const departFuture = dateNow.setDate(dateNow.getDate() + 16);
 
-const futureDate = dateNow.getDate();
-const futureMonth = dateNow.getMonth() + 1; // 0 is January, so we must add 1
-const futureYear = dateNow.getFullYear();
+    const futureDate = dateNow.getDate();
+    const futureMonth = dateNow.getMonth() + 1; // 0 is January, so we must add 1
+    const futureYear = dateNow.getFullYear();
 
 
-// Sanitise date string
-const isSingleDigit = (dateNum) => {
-  let dateNumAsString = dateNum.toString();
-  if(dateNumAsString.length < 2){
-    const sanitisedDateString = ("0" + dateNum).slice(-2);
-    //console.log(`New Date: ${sanitisedDateString}`);
-    return sanitisedDateString;
-  } else {
-    return dateNumAsString;
-  }
-}
+    // Sanitise date string
+    const isSingleDigit = (dateNum) => {
+    let dateNumAsString = dateNum.toString();
+    if(dateNumAsString.length < 2){
+        const sanitisedDateString = ("0" + dateNum).slice(-2);
+        //console.log(`New Date: ${sanitisedDateString}`);
+        return sanitisedDateString;
+    } else {
+        return dateNumAsString;
+    }
+    }
 
-let cleanCMonth = isSingleDigit(currentMonth);
-let cleanCDate = isSingleDigit(currentDate);
-let cleanFMonth = isSingleDigit(futureMonth);
-let cleanFDate = isSingleDigit(futureDate);
+    let cleanCMonth = isSingleDigit(currentMonth);
+    let cleanCDate = isSingleDigit(currentDate);
+    let cleanFMonth = isSingleDigit(futureMonth);
+    let cleanFDate = isSingleDigit(futureDate);
 
-// Build Date Satring
-const currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;
-const futureDateString = `${futureYear}-${cleanFMonth}-${cleanFDate}`;
+    // Build Date Satring
+    const currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;
+    const futureDateString = `${futureYear}-${cleanFMonth}-${cleanFDate}`;
 
-console.log(currentDateString);
-console.log(futureDateString);
+    console.log(currentDateString);
+    console.log(futureDateString);
 
-document.getElementById('departure-date').setAttribute('min', currentDateString);
-document.getElementById('departure-date').setAttribute('max', futureDateString);
+    document.getElementById('departure-date').setAttribute('min', currentDateString);
+    document.getElementById('departure-date').setAttribute('max', futureDateString);
 })();
 
 
