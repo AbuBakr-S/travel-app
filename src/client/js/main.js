@@ -9,48 +9,52 @@ let forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/da
 // Countdown Tracker
 let withinAWeek;
 
-// Set Minimum Date on Date Picker to Present Day
+// Set Minimum and Maximum Date on Date Picker
+// Min - Present day
+// Max - 16 days ahead
 (() => {
-    // Set Min Departure Date on Calendar
-    const date = new Date();
+    //##### SANITISE DATE #####
+    const dateNow = new Date();
+const currentYear = dateNow.getFullYear();
+const currentMonth = dateNow.getMonth() + 1;
+const currentDate = dateNow.getDate();
 
-    const year = date.getFullYear();
-    console.log(year);
+// Set Max Departure Date on Calendar
+const departFuture = dateNow.setDate(dateNow.getDate() + 16);
 
-    const month = date.getMonth() + 1;
-    console.log(month + 1);
-
-    const dateNum = date.getDate();
-    console.log(dateNum);
-
-    // Set Max Departure Date on Calendar
-    const futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + 16);
-
-    // So you can see the date we have created
-    console.log(futureDate);
-
-    const date2 = futureDate.getDate();
-    const month2 = futureDate.getMonth() + 1; // 0 is January, so we must add 1
-    const year2 = futureDate.getFullYear();
+const futureDate = dateNow.getDate();
+const futureMonth = dateNow.getMonth() + 1; // 0 is January, so we must add 1
+const futureYear = dateNow.getFullYear();
 
 
-    const formattedNumber = ("0" + date2).slice(-2);
-    console.log(formattedNumber);
+// Sanitise date string
+const isSingleDigit = (dateNum) => {
+  let dateNumAsString = dateNum.toString();
+  if(dateNumAsString.length < 2){
+    const sanitisedDateString = ("0" + dateNum).slice(-2);
+    //console.log(`New Date: ${sanitisedDateString}`);
+    return sanitisedDateString;
+  } else {
+    return dateNumAsString;
+  }
+}
 
-    const formattedNumber2 = ("0" + month2).slice(-2);
-    console.log(formattedNumber);
+let cleanCMonth = isSingleDigit(currentMonth);
+let cleanCDate = isSingleDigit(currentDate);
+let cleanFMonth = isSingleDigit(futureMonth);
+let cleanFDate = isSingleDigit(futureDate);
 
+// Build Date Satring
+const currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;
+const futureDateString = `${futureYear}-${cleanFMonth}-${cleanFDate}`;
 
-    // Build Date Satring
-    const dateString = `${year}-${month}-${dateNum}`;
-    console.log(dateString);
-    const dateString2 = `${year2}-${formattedNumber2}-${formattedNumber}`;
-    console.log(dateString2);
+console.log(currentDateString);
+console.log(futureDateString);
 
-    document.getElementById('departure-date').setAttribute('min', dateString);
-    document.getElementById('departure-date').setAttribute('max', dateString2);
+document.getElementById('departure-date').setAttribute('min', currentDateString);
+document.getElementById('departure-date').setAttribute('max', futureDateString);
 })();
+
 
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
