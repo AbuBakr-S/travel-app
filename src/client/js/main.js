@@ -210,4 +210,4 @@ const updateUI = async () => {
 };
 
 
-export {getPlaceName, getCurrentWeather, performAction};
+export {getPlaceName, getLocation, getCurrentWeather, getForecastWeather, performAction, tripCountdown, updateUI};
