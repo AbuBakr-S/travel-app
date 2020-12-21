@@ -29,14 +29,14 @@ let withinAWeek;
 
     // Sanitise date string
     const isSingleDigit = (dateNum) => {
-    let dateNumAsString = dateNum.toString();
-    if(dateNumAsString.length < 2){
-        const sanitisedDateString = ("0" + dateNum).slice(-2);
-        //console.log(`New Date: ${sanitisedDateString}`);
-        return sanitisedDateString;
-    } else {
-        return dateNumAsString;
-    }
+        let dateNumAsString = dateNum.toString();
+        if(dateNumAsString.length < 2){
+            const sanitisedDateString = ("0" + dateNum).slice(-2);
+            //console.log(`New Date: ${sanitisedDateString}`);
+            return sanitisedDateString;
+        } else {
+            return dateNumAsString;
+        }
     }
 
     let cleanCMonth = isSingleDigit(currentMonth);
