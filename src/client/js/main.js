@@ -77,10 +77,14 @@ const getLocation = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        currentWeatherBaseURL.searchParams.append("lat", allData.latitude);
-        currentWeatherBaseURL.searchParams.append("lon", allData.longitude);
-        forecastWeatherBaseURL.searchParams.append("lat", allData.latitude);
-        forecastWeatherBaseURL.searchParams.append("lon", allData.longitude);
+        if(withinAWeek){
+            currentWeatherBaseURL.searchParams.append("lat", allData.latitude);
+            currentWeatherBaseURL.searchParams.append("lon", allData.longitude);
+        }
+        if(!withinAWeek){
+            forecastWeatherBaseURL.searchParams.append("lat", allData.latitude);
+            forecastWeatherBaseURL.searchParams.append("lon", allData.longitude);
+        }
     } catch(error) {
         console.log("error", error);
     }
@@ -124,13 +128,22 @@ async function performAction(e) {
     forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily');
     tripCountdown();
     console.log(`The Trip is Within a Week: ${withinAWeek}`);
+
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
-    await getLocation();
-    data = await getCurrentWeather(currentWeatherBaseURL);
-    await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
-    data = await getForecastWeather(forecastWeatherBaseURL);
-    await postData('/forecastWeather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+
+    if(withinAWeek){    
+        await getLocation();
+        data = await getCurrentWeather(currentWeatherBaseURL);
+        await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+    }
+
+    if(!withinAWeek){
+        await getLocation();
+        data = await getForecastWeather(forecastWeatherBaseURL);
+        await postData('/forecastWeather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+    }
+
     await updateUI();
 }
 
