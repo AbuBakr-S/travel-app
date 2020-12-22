@@ -91,30 +91,15 @@ const getLocation = async () => {
 };
 
 
-// Weatherbit - GET Request
-const getCurrentWeather = async(currentWeatherBaseURL) => {
-    currentWeatherBaseURL.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
-    currentWeatherBaseURL.href;
-    const res = await fetch(currentWeatherBaseURL);
+const getWeather = async(baseURL) => {
+    baseURL.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
+    baseURL.href;
+    const res = await fetch(baseURL);
     try {
-      const data = await res.json();
-      return data;
+        const data = await res.json();
+        return data;
     } catch(error) {
-      console.log("error", error);
-    }
-}
-
-
-// Weatherbit - GET Request
-const getForecastWeather = async(forecastWeatherBaseURL) => {
-    forecastWeatherBaseURL.searchParams.append("key", "8fcdb754804e4825afbd72eb47d12818");
-    forecastWeatherBaseURL.href;
-    const res = await fetch(forecastWeatherBaseURL);
-    try {
-      const data = await res.json();
-      return data;
-    } catch(error) {
-      console.log("error", error);
+        console.log("error", error);
     }
 }
 
@@ -134,13 +119,13 @@ async function performAction(e) {
 
     if(withinAWeek){    
         await getLocation();
-        data = await getCurrentWeather(currentWeatherBaseURL);
+        data = await getWeather(currentWeatherBaseURL);
         await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
     }
 
     if(!withinAWeek){
         await getLocation();
-        data = await getForecastWeather(forecastWeatherBaseURL);
+        data = await getWeather(forecastWeatherBaseURL);
         await postData('/forecastWeather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
     }
 
@@ -210,4 +195,4 @@ const updateUI = async () => {
 };
 
 
-export {getPlaceName, getLocation, getCurrentWeather, getForecastWeather, performAction, tripCountdown, updateUI};
+export {getPlaceName, getLocation, getWeather, performAction, tripCountdown, updateUI};
