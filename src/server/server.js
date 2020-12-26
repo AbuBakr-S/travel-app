@@ -60,8 +60,8 @@ app.post('/forecastWeather', postForecastWeather);
 function postForecastWeather (req, res){
     let data = req.body;
     // TODO: Add Weather and Temperature to projectData endpoint
-    projectData["forecastWeather"] = data.weather;
-    projectData["forecastTemperature"] = data.temperature;
+    projectData["forecastWeather"] = data.forecastWeather;
+    projectData["forecastTemperature"] = data.forecastTemperature;
     res.send(projectData);
 }
 

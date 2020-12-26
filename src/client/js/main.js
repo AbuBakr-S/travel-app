@@ -121,12 +121,14 @@ async function performAction(e) {
         await getLocation();
         data = await getWeather(currentWeatherBaseURL);
         await postData('/weather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+        await postData('/forecastWeather', {forecastWeather: undefined, forecastTemperature: undefined});
     }
 
     if(!withinAWeek){
         await getLocation();
         data = await getWeather(forecastWeatherBaseURL);
-        await postData('/forecastWeather', {weather: data.data[0].weather.description, temperature: data.data[0].temp});
+        await postData('/forecastWeather', {forecastWeather: data.data[0].weather.description, forecastTemperature: data.data[0].temp});
+        await postData('/weather', {weather: undefined, temperature: undefined});
     }
 
     await updateUI();
@@ -173,7 +175,6 @@ const postData = async (url = '', data = {})=>{
         // Appropriately handle the error
     }
 };
-
 
 // Update UI
 const updateUI = async () => {
