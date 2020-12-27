@@ -20,7 +20,7 @@ let withinAWeek;
     const currentDate = dateNow.getDate();
 
     // Set Max Departure Date on Calendar
-    const departFuture = dateNow.setDate(dateNow.getDate() + 15);
+    dateNow.setDate(dateNow.getDate() + 15);
 
     const futureDate = dateNow.getDate();
     const futureMonth = dateNow.getMonth() + 1; // 0 is January, so we must add 1
