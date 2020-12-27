@@ -45,7 +45,7 @@ let withinAWeek;
     let cleanFDate = isSingleDigit(futureDate);
 
     // Build Date Satring
-    const currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;
+    window.currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;   // Make  a copy of this global
     const futureDateString = `${futureYear}-${cleanFMonth}-${cleanFDate}`;
 
     console.log(currentDateString);
@@ -114,6 +114,24 @@ async function performAction(e) {
     tripCountdown();
     console.log(`The Trip is Within a Week: ${withinAWeek}`);
 
+    
+    // Calculate date position to index 16 day weather forecast
+    const dateDepart = document.getElementById('departure-date').value;
+    // currentDateString has been copied into global
+    let currentDateComponentsArray = currentDateString.split("-");
+    let departDateComponentsArray =  dateDepart.split("-");
+    let y1, m1, d1, y2, m2, d2;
+    [y1, m1, d1] = currentDateComponentsArray;
+    [y2, m2, d2] = departDateComponentsArray;
+    console.log(currentDateComponentsArray);
+    console.log(departDateComponentsArray);
+    const date1 = new Date(`${y1}, ${m1}, ${d1}`);
+    const date2 = new Date(`${y2}, ${m2}, ${d2}`);
+    const diff = date2 - date1;
+    const elapsed = diff / (1000*60*60*24);
+    console.log(elapsed);
+
+
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
 
@@ -127,7 +145,7 @@ async function performAction(e) {
     if(!withinAWeek){
         await getLocation();
         data = await getWeather(forecastWeatherBaseURL);
-        await postData('/forecastWeather', {forecastWeather: data.data[0].weather.description, forecastTemperature: data.data[0].temp});
+        await postData('/forecastWeather', {forecastWeather: data.data[elapsed].weather.description, forecastTemperature: data.data[elapsed].temp});
         await postData('/weather', {weather: undefined, temperature: undefined});
     }
 
