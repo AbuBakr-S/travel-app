@@ -171,8 +171,7 @@ const tripCountdown = () => {
         //console.log('More than 1 week. Proivide predicted weather forecast');
         return withinAWeek = false;
     }
-}
-
+  
 
 // Setup Async POST request
 const postData = async (url = '', data = {})=>{
@@ -194,11 +193,13 @@ const postData = async (url = '', data = {})=>{
     }
 };
 
+
 // Update UI
 const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
+        console.log(allData);
         document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
