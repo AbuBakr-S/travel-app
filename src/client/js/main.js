@@ -149,6 +149,11 @@ async function performAction(e) {
         await postData('/weather', {weather: undefined, temperature: undefined});
     }
 
+    // Sanitise place name for pixabay image search
+    const newPlaceNameStr = placeName.split(' ').join('+');
+    data = await getImage(pixabayBaseURL, newPlaceNameStr);
+    await postData('placeImage', {imageSource: data.hits[0].webformatURL})
+
     await updateUI();
 }
 
@@ -170,6 +175,27 @@ const tripCountdown = () => {
     } else {
         //console.log('More than 1 week. Proivide predicted weather forecast');
         return withinAWeek = false;
+    }
+}
+
+
+// Pixabay GET Request
+const pixabayApiKey = '19683295-e8b4f306744125816c90e3afb';
+let pixabayBaseURL = new URL ('https://pixabay.com/api/');
+
+const getImage = async(baseURL, imageSearch) => {
+    pixabayBaseURL.searchParams.append("key", pixabayApiKey);
+    console.log(imageSearch);
+    pixabayBaseURL.searchParams.append("q", imageSearch);
+    pixabayBaseURL.href;
+
+    const res = await fetch(pixabayBaseURL);
+    try {
+        const imageData = await res.json();
+        console.log(imageData.hits[0].webformatURL);
+        return imageData;
+    } catch(error) {
+        console.log("error", error);
     }
 }
   
@@ -208,6 +234,7 @@ const updateUI = async () => {
         document.getElementById('temperature').innerHTML = `The Current Temperature is: ${allData.temperature}`;
         document.getElementById('forecast-weather').innerHTML = `The Forecasted Weather is: ${allData.forecastWeather}`;
         document.getElementById('forecast-temperature').innerHTML = `The Forecasted Temperature is: ${allData.forecastTemperature}`;
+        document.getElementById('place-image').setAttribute("src", allData.imageSource);
     } catch(error) {
         console.log("error", error);
         // Display error message to the user if the call fails
