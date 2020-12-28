@@ -164,7 +164,7 @@ const tripCountdown = () => {
 
     let difference = d2 - d1;
     
-    if (difference < 604800000) {
+    if (difference < 518400000) {
         //console.log('Within a week. Provide current weather forecast');
         return withinAWeek = true;
     } else {
