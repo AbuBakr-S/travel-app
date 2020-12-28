@@ -20,6 +20,7 @@ app.use(cors());
 // Initialise the main project folder.
 app.use(express.static('dist'));
 
+
 // Setup server
 const port = 8000;
 const server = app.listen(port, listening);
@@ -28,21 +29,47 @@ function listening() {
 }
 
 
-// GET route that returns the projectData object
-app.get('/all', sendData);
-
-function sendData (req, res) {
-    res.send(projectData);
-};
-
 // POST route that adds incoming data to projectData
-app.post('/', postWeather);
+app.post('/place', postPlace);
 
-function postWeather (req, res){
+function postPlace (req, res){
     let data = req.body;
-    console.log('data from server: ', data);
+    //console.log('data from server: ', data);
     projectData["latitude"] = data.latitude;
     projectData["longitude"] = data.longitude;
     projectData["country"] = data.country;
     res.send(projectData);
 }
+
+
+// POST route that adds incoming data to projectData
+app.post('/weather', postWeather);
+
+function postWeather (req, res){
+    let data = req.body;
+    // TODO: Add Weather and Temperature to projectData endpoint
+    projectData["weather"] = data.weather;
+    projectData["temperature"] = data.temperature;
+    res.send(projectData);
+}
+
+
+// POST route that adds incoming data to projectData
+app.post('/forecastWeather', postForecastWeather);
+
+function postForecastWeather (req, res){
+    let data = req.body;
+    // TODO: Add Weather and Temperature to projectData endpoint
+    projectData["forecastWeather"] = data.forecastWeather;
+    projectData["forecastTemperature"] = data.forecastTemperature;
+    res.send(projectData);
+}
+
+
+// GET route that returns the projectData object
+app.get('/all', sendData);
+
+function sendData (req, res) {
+    console.log(projectData);
+    res.send(projectData);
+};
