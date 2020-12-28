@@ -66,6 +66,17 @@ function postForecastWeather (req, res){
 }
 
 
+// POST route that adds image of the place name
+app.post('/placeImage', postPlaceImage);
+
+function postPlaceImage (req, res){
+    let data = req.body;
+    // TODO: Add the image url of place name entered by the user
+    projectData["imageSource"] = data.imageSource;
+    res.send(projectData);
+}
+
+
 // GET route that returns the projectData object
 app.get('/all', sendData);
 

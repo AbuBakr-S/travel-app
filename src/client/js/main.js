@@ -149,11 +149,12 @@ async function performAction(e) {
         await postData('/weather', {weather: undefined, temperature: undefined});
     }
 
-    await updateUI();
-
     // Sanitise place name for pixabay image search
     const newPlaceNameStr = placeName.split(' ').join('+');
-    await getImage(pixabayBaseURL, newPlaceNameStr);
+    data = await getImage(pixabayBaseURL, newPlaceNameStr);
+    await postData('placeImage', {imageSource: data.hits[0].webformatURL})
+
+    await updateUI();
 }
 
 
@@ -233,6 +234,7 @@ const updateUI = async () => {
         document.getElementById('temperature').innerHTML = `The Current Temperature is: ${allData.temperature}`;
         document.getElementById('forecast-weather').innerHTML = `The Forecasted Weather is: ${allData.forecastWeather}`;
         document.getElementById('forecast-temperature').innerHTML = `The Forecasted Temperature is: ${allData.forecastTemperature}`;
+        document.getElementById('place-image').setAttribute("src", allData.imageSource);
     } catch(error) {
         console.log("error", error);
         // Display error message to the user if the call fails
