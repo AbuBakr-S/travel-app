@@ -171,6 +171,7 @@ const tripCountdown = () => {
         //console.log('More than 1 week. Proivide predicted weather forecast');
         return withinAWeek = false;
     }
+}
   
 
 // Setup Async POST request
