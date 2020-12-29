@@ -136,6 +136,8 @@ async function performAction(e) {
     data = await getImage(pixabayBaseURL, newPlaceNameStr);
     await postData('placeImage', {imageSource: data.hits[0].webformatURL})
 
+    tripDuration();
+
     await updateUI();
 }
 
@@ -176,6 +178,29 @@ const tripCountdown = () => {
         //console.log('More than 1 week. Proivide predicted weather forecast');
         return withinAWeek = false;
     }
+}
+
+
+const tripDuration = () => {
+    const dateDepart = document.getElementById('departure-date').value;
+    const dateReturn = document.getElementById('return-date').value;
+
+    let departDateComponentsArray =  dateDepart.split("-");
+    let returnDateComponentsArray =  dateReturn.split("-");
+
+    let departY, departM, departD, returnY, returnM, returnD;
+    [departY, departM, departD] = departDateComponentsArray;
+    [returnY, returnM, returnD] = returnDateComponentsArray;
+    console.log(departDateComponentsArray);
+    console.log(returnDateComponentsArray);
+
+    const date1 = new Date(`${departY}, ${departM}, ${departD}`);
+    const date2 = new Date(`${returnY}, ${returnM}, ${returnD}`);
+    const diff = date2 - date1;
+    console.log(diff);
+    const tripLength = diff / (1000*60*60*24);
+    console.log(tripLength);
+    window.tripLength = tripLength;
 }
 
 
@@ -227,7 +252,7 @@ const updateUI = async () => {
     try {
         const allData = await request.json();
         console.log(allData);
-        document.getElementById('countdown').innerHTML = `Your Trip is in: ${elapsed} Days`;
+        document.getElementById('countdown').innerHTML = `Your Trip Duration is: ${tripLength} Days`;
         document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.longitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
