@@ -114,24 +114,6 @@ async function performAction(e) {
     tripCountdown();
     console.log(`The Trip is Within a Week: ${withinAWeek}`);
 
-    
-    // Calculate date position to index 16 day weather forecast
-    const dateDepart = document.getElementById('departure-date').value;
-    // currentDateString has been copied into global
-    let currentDateComponentsArray = currentDateString.split("-");
-    let departDateComponentsArray =  dateDepart.split("-");
-    let y1, m1, d1, y2, m2, d2;
-    [y1, m1, d1] = currentDateComponentsArray;
-    [y2, m2, d2] = departDateComponentsArray;
-    console.log(currentDateComponentsArray);
-    console.log(departDateComponentsArray);
-    const date1 = new Date(`${y1}, ${m1}, ${d1}`);
-    const date2 = new Date(`${y2}, ${m2}, ${d2}`);
-    const diff = date2 - date1;
-    const elapsed = diff / (1000*60*60*24);
-    console.log(elapsed);
-
-
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
 
@@ -160,6 +142,24 @@ async function performAction(e) {
 
 // Calculate whether the trip is within a week
 const tripCountdown = () => {
+
+    // Calculate date position to index 16 day weather forecast
+    const dateDepart = document.getElementById('departure-date').value;
+    // currentDateString has been copied into global
+    let currentDateComponentsArray = currentDateString.split("-");
+    let departDateComponentsArray =  dateDepart.split("-");
+    let currentY, currentM, currentD, departY, departM, departD;
+    [currentY, currentM, currentD] = currentDateComponentsArray;
+    [departY, departM, departD] = departDateComponentsArray;
+    console.log(currentDateComponentsArray);
+    console.log(departDateComponentsArray);
+    const date1 = new Date(`${currentY}, ${currentM}, ${currentD}`);
+    const date2 = new Date(`${departY}, ${departM}, ${departD}`);
+    const diff = date2 - date1;
+    const elapsed = diff / (1000*60*60*24);
+    window.elapsed = elapsed;
+    console.log(elapsed);
+
     // Date of user submission in milliseconds
     let d1 = Date.now();
 
@@ -227,7 +227,8 @@ const updateUI = async () => {
     try {
         const allData = await request.json();
         console.log(allData);
-        document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.latitude}`;
+        document.getElementById('countdown').innerHTML = `Your Trip is in: ${elapsed} Days`;
+        document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.longitude}`;
         document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
         document.getElementById('weather').innerHTML = `The Weather is: ${allData.weather}`;
