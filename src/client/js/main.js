@@ -108,10 +108,15 @@ const getWeather = async(baseURL) => {
 async function performAction(e) {
     // Retrieve the place name
     let placeName = document.getElementById('place').value;
+
+    // Retrieve depart and return dates
+    const dateDepart = document.getElementById('departure-date').value;
+    const dateReturn = document.getElementById('return-date').value;
+
     // Reset URL to prevent apending values from additional submissions
     currentWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/current');
     forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily');
-    tripCountdown();
+    tripCountdown(dateDepart);
     console.log(`The Trip is Within a Week: ${withinAWeek}`);
 
     let data = await getPlaceName(baseURL, placeName, apiKey);
@@ -136,17 +141,15 @@ async function performAction(e) {
     data = await getImage(pixabayBaseURL, newPlaceNameStr);
     await postData('placeImage', {imageSource: data.hits[0].webformatURL})
 
-    tripDuration();
+    tripDuration(dateDepart, dateReturn);
 
     await updateUI();
 }
 
 
 // Calculate whether the trip is within a week
-const tripCountdown = () => {
-
+const tripCountdown = (dateDepart) => {
     // Calculate date position to index 16 day weather forecast
-    const dateDepart = document.getElementById('departure-date').value;
     // currentDateString has been copied into global
     let currentDateComponentsArray = currentDateString.split("-");
     let departDateComponentsArray =  dateDepart.split("-");
@@ -166,7 +169,7 @@ const tripCountdown = () => {
     let d1 = Date.now();
 
     // Date of departure in milliseconds
-    let d = new Date(document.getElementById("departure-date").value);
+    let d = new Date(dateDepart);
     let d2 = Date.parse(d);
 
     let difference = d2 - d1;
@@ -181,10 +184,7 @@ const tripCountdown = () => {
 }
 
 
-const tripDuration = () => {
-    const dateDepart = document.getElementById('departure-date').value;
-    const dateReturn = document.getElementById('return-date').value;
-
+const tripDuration = (dateDepart, dateReturn) => {
     let departDateComponentsArray =  dateDepart.split("-");
     let returnDateComponentsArray =  dateReturn.split("-");
 
