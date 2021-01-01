@@ -9,52 +9,42 @@ let forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/da
 // Countdown Tracker
 let withinAWeek;
 
-// Set Minimum and Maximum Date on Date Picker
-// Min - Present day
-// Max - 16 days ahead
-(() => {
-    //##### SANITISE DATE #####
-    const dateNow = new Date();
-    const currentYear = dateNow.getFullYear();
-    const currentMonth = dateNow.getMonth() + 1;
-    const currentDate = dateNow.getDate();
+const dateNow = new Date();
 
-    // Set Max Departure Date on Calendar
-    dateNow.setDate(dateNow.getDate() + 15);
+// Current date and future date will be the min and max on the date picker
+// Future date is set 15 days ahead of the current date
+const dateComponentsObject = {
+    currentYear: dateNow.getFullYear(),
+    currentMonth: dateNow.getMonth() + 1,
+    currentDate: dateNow.getDate(),
+    futureYear: dateNow.getFullYear(),
+    futureMonth: dateNow.getMonth() + 1,
+    futureDate: dateNow.getDate() + 15
+}
 
-    const futureDate = dateNow.getDate();
-    const futureMonth = dateNow.getMonth() + 1; // 0 is January, so we must add 1
-    const futureYear = dateNow.getFullYear();
+// Ensure single digit strings are prepended by 0 to return double digits
+const isSingleDigit = (dateNum) => {
+  let dateNumAsString = dateNum.toString();
+  if(dateNumAsString.length < 2){
+    const sanitisedDateString = ("0" + dateNum).slice(-2);
+    return sanitisedDateString;
+  } else {
+    return dateNumAsString;
+  }
+}
 
+// Store formatted date components 
+const formattedCurrentMonth = isSingleDigit(dateComponentsObject.currentMonth.toString());
+const formattedCurrentDate = isSingleDigit(dateComponentsObject.currentDate.toString());
+const formattedFutureMonth = isSingleDigit(dateComponentsObject.futureMonth.toString());
+const formattedFutureDate = isSingleDigit(dateComponentsObject.futureDate.toString());
 
-    // Sanitise date string
-    const isSingleDigit = (dateNum) => {
-        let dateNumAsString = dateNum.toString();
-        if(dateNumAsString.length < 2){
-            const sanitisedDateString = ("0" + dateNum).slice(-2);
-            //console.log(`New Date: ${sanitisedDateString}`);
-            return sanitisedDateString;
-        } else {
-            return dateNumAsString;
-        }
-    }
+// Build YYYY-MM-DD format for min and max attributes
+const currentDateString = `${dateComponentsObject.currentYear}-${formattedCurrentMonth}-${formattedCurrentDate}`;
+const futureDateString = `${dateComponentsObject.futureYear}-${formattedFutureMonth}-${formattedFutureDate}`;
 
-    let cleanCMonth = isSingleDigit(currentMonth);
-    let cleanCDate = isSingleDigit(currentDate);
-    let cleanFMonth = isSingleDigit(futureMonth);
-    let cleanFDate = isSingleDigit(futureDate);
-
-    // Build Date Satring
-    window.currentDateString = `${currentYear}-${cleanCMonth}-${cleanCDate}`;   // Make  a copy of this global
-    const futureDateString = `${futureYear}-${cleanFMonth}-${cleanFDate}`;
-
-    console.log(currentDateString);
-    console.log(futureDateString);
-
-    document.getElementById('departure-date').setAttribute('min', currentDateString);
-    document.getElementById('departure-date').setAttribute('max', futureDateString);
-})();
-
+document.getElementById('departure-date').setAttribute('min', currentDateString);
+document.getElementById('departure-date').setAttribute('max', futureDateString);
 
 //  Make a GET request on click
 document.getElementById('search').addEventListener('click', performAction);
@@ -150,7 +140,6 @@ async function performAction(e) {
 // Calculate whether the trip is within a week
 const tripCountdown = (dateDepart) => {
     // Calculate date position to index 16 day weather forecast
-    // currentDateString has been copied into global
     let currentDateComponentsArray = currentDateString.split("-");
     let departDateComponentsArray =  dateDepart.split("-");
     let currentY, currentM, currentD, departY, departM, departD;
