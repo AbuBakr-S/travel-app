@@ -174,22 +174,35 @@ const tripCountdown = (dateDepart) => {
 
 
 const tripDuration = (dateDepart, dateReturn) => {
-    let departDateComponentsArray =  dateDepart.split("-");
-    let returnDateComponentsArray =  dateReturn.split("-");
+    // Store user selected dates
+    let dateDepartString =  dateDepart.split("-");
+    let returnDateString =  dateReturn.split("-");
 
-    let departY, departM, departD, returnY, returnM, returnD;
-    [departY, departM, departD] = departDateComponentsArray;
-    [returnY, returnM, returnD] = returnDateComponentsArray;
-    console.log(departDateComponentsArray);
-    console.log(returnDateComponentsArray);
+    // Add depart date strings to dateComponentsObject
+    dateComponentsObject.departYear = dateDepartString[0];
+    dateComponentsObject.departMonth = dateDepartString[1];
+    dateComponentsObject.departDate = dateDepartString[2];
 
-    const date1 = new Date(`${departY}, ${departM}, ${departD}`);
-    const date2 = new Date(`${returnY}, ${returnM}, ${returnD}`);
+    // Add return date strings to dateComponentsObject
+    dateComponentsObject.returnYear = returnDateString[0];
+    dateComponentsObject.returnMonth = returnDateString[1];
+    dateComponentsObject.returnDate = returnDateString[2];
+
+    // Use date constructor to build date with the date strings 
+    const date1 = new Date(dateComponentsObject.departYear, dateComponentsObject.departMonth, dateComponentsObject.departDate);
+    const date2 = new Date(dateComponentsObject.returnYear, dateComponentsObject.returnMonth, dateComponentsObject.returnDate);
+    
+    // Calculate difference between milliseconds
     const diff = date2 - date1;
     console.log(diff);
+    
+    // Calculate duration in days from milliseconds
     const tripLength = diff / (1000*60*60*24);
     console.log(tripLength);
     window.tripLength = tripLength;
+
+    // Print date object
+    console.log(dateComponentsObject);
 }
 
 
