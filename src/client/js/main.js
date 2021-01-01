@@ -12,14 +12,14 @@ let withinAWeek;
 const dateNow = new Date();
 
 // Current date and future date will be the min and max on the date picker
-// Future date is set 15 days ahead of the current date
+// Future date is set 15 days ahead of the current date for 16 day forecast api
 const dateComponentsObject = {
     currentYear: dateNow.getFullYear(),
     currentMonth: dateNow.getMonth() + 1,
     currentDate: dateNow.getDate(),
-    futureYear: dateNow.getFullYear(),
-    futureMonth: dateNow.getMonth() + 1,
-    futureDate: dateNow.getDate() + 15
+    forecastWeatherYear: dateNow.getFullYear(),
+    forecastWeatherMonth: dateNow.getMonth() + 1,
+    forecastWeatherDate: dateNow.getDate() + 15
 }
 
 // Ensure single digit strings are prepended by 0 to return double digits
@@ -36,12 +36,12 @@ const isSingleDigit = (dateNum) => {
 // Store formatted date components 
 const formattedCurrentMonth = isSingleDigit(dateComponentsObject.currentMonth.toString());
 const formattedCurrentDate = isSingleDigit(dateComponentsObject.currentDate.toString());
-const formattedFutureMonth = isSingleDigit(dateComponentsObject.futureMonth.toString());
-const formattedFutureDate = isSingleDigit(dateComponentsObject.futureDate.toString());
+const formattedForecastWeatherMonth = isSingleDigit(dateComponentsObject.forecastWeatherMonth.toString());
+const formattedForecastWeatherDate = isSingleDigit(dateComponentsObject.forecastWeatherDate.toString());
 
 // Build YYYY-MM-DD format for min and max attributes
 const currentDateString = `${dateComponentsObject.currentYear}-${formattedCurrentMonth}-${formattedCurrentDate}`;
-const futureDateString = `${dateComponentsObject.futureYear}-${formattedFutureMonth}-${formattedFutureDate}`;
+const futureDateString = `${dateComponentsObject.forecastWeatherYear}-${formattedForecastWeatherMonth}-${formattedForecastWeatherDate}`;
 
 document.getElementById('departure-date').setAttribute('min', currentDateString);
 document.getElementById('departure-date').setAttribute('max', futureDateString);
