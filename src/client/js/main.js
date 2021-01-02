@@ -264,6 +264,7 @@ const updateUI = async () => {
         let fWeather = document.getElementById('forecast-weather');
         let fTemperature = document.getElementById('forecast-temperature');
 
+        // Only show current weather if depart date is within a week
         if(withinAWeek){
             fWeather.classList.add('hide');
             fTemperature.classList.add('hide');
@@ -271,6 +272,7 @@ const updateUI = async () => {
             cTemperature.classList.remove('hide');
         }
 
+        // Only show forecast weather if depart date is more than a week
         if(!withinAWeek){
             cWeather.classList.add('hide');
             cTemperature.classList.add('hide');
