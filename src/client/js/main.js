@@ -131,7 +131,7 @@ async function performAction(e) {
     data = await getImage(pixabayBaseURL, newPlaceNameStr);
     await postData('placeImage', {imageSource: data.hits[0].webformatURL})
 
-    tripDuration(dateDepart, dateReturn);
+    tripDuration(dateReturn);
 
     await updateUI();
 }
@@ -140,15 +140,18 @@ async function performAction(e) {
 // Calculate whether the trip is within a week
 const tripCountdown = (dateDepart) => {
     // Calculate date position to index 16 day weather forecast
-    let currentDateComponentsArray = currentDateString.split("-");
-    let departDateComponentsArray =  dateDepart.split("-");
-    let currentY, currentM, currentD, departY, departM, departD;
-    [currentY, currentM, currentD] = currentDateComponentsArray;
-    [departY, departM, departD] = departDateComponentsArray;
-    console.log(currentDateComponentsArray);
-    console.log(departDateComponentsArray);
-    const date1 = new Date(`${currentY}, ${currentM}, ${currentD}`);
-    const date2 = new Date(`${departY}, ${departM}, ${departD}`);
+
+    // Store user selected dates
+    let dateDepartString =  dateDepart.split("-");
+
+    // Add depart date strings to dateComponentsObject
+    dateComponentsObject.departYear = dateDepartString[0];
+    dateComponentsObject.departMonth = dateDepartString[1];
+    dateComponentsObject.departDate = dateDepartString[2];
+
+    const date1 = new Date(`${dateComponentsObject.currentYear}, ${formattedCurrentMonth}, ${formattedCurrentDate}`);
+    const date2 = new Date(dateComponentsObject.departYear, dateComponentsObject.departMonth, dateComponentsObject.departDate);
+
     const diff = date2 - date1;
     const elapsed = diff / (1000*60*60*24);
     window.elapsed = elapsed;
@@ -173,15 +176,9 @@ const tripCountdown = (dateDepart) => {
 }
 
 
-const tripDuration = (dateDepart, dateReturn) => {
+const tripDuration = (dateReturn) => {
     // Store user selected dates
-    let dateDepartString =  dateDepart.split("-");
     let returnDateString =  dateReturn.split("-");
-
-    // Add depart date strings to dateComponentsObject
-    dateComponentsObject.departYear = dateDepartString[0];
-    dateComponentsObject.departMonth = dateDepartString[1];
-    dateComponentsObject.departDate = dateDepartString[2];
 
     // Add return date strings to dateComponentsObject
     dateComponentsObject.returnYear = returnDateString[0];
