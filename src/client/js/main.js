@@ -150,12 +150,12 @@ const tripCountdown = (dateDepart) => {
     dateComponentsObject.departDate = dateDepartString[2];
 
     const date1 = new Date(`${dateComponentsObject.currentYear}, ${formattedCurrentMonth}, ${formattedCurrentDate}`);
-    const date2 = new Date(dateComponentsObject.departYear, dateComponentsObject.departMonth, dateComponentsObject.departDate);
+    const date2 = new Date(`${dateComponentsObject.departYear}, ${dateComponentsObject.departMonth}, ${dateComponentsObject.departDate}`);
 
     const diff = date2 - date1;
     const elapsed = diff / (1000*60*60*24);
     window.elapsed = elapsed;
-    console.log(elapsed);
+    console.log(`Elapsed value is: ${elapsed}`);
 
     // Date of user submission in milliseconds
     let d1 = Date.now();
