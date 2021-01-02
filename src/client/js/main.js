@@ -78,7 +78,7 @@ const getLocation = async () => {
     } catch(error) {
         console.log("error", error);
     }
-};
+}
 
 
 const getWeather = async(baseURL) => {
@@ -149,9 +149,12 @@ const tripCountdown = (dateDepart) => {
     dateComponentsObject.departMonth = dateDepartString[1];
     dateComponentsObject.departDate = dateDepartString[2];
 
+    // Build current date and depart date. Pass date components as string values into the date constructor
+    // Calculate the difference between the departure date and the current date to retrieve a value
     const date1 = new Date(`${dateComponentsObject.currentYear}, ${formattedCurrentMonth}, ${formattedCurrentDate}`);
     const date2 = new Date(`${dateComponentsObject.departYear}, ${dateComponentsObject.departMonth}, ${dateComponentsObject.departDate}`);
 
+    // The retrieved value will be converted into days to index the forecast weather array
     const diff = date2 - date1;
     const elapsed = diff / (1000*60*60*24);
     window.elapsed = elapsed;
