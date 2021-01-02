@@ -3,17 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <title>Weather Journal</title>
-        <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div id="app">
-            <div class="holder headline">
+        <div class="wrapper" id="app">
+            <div class="one holder headline">
                 <h1>Location Finder</h1>
             </div>
-            <div class="holder details">
+            <div class="two holder details">
                 <label class="heading" for="place">Enter A Place Name:</label>
-                <input class="myInput" type="text" id="place" name="place" placeholder="Example: London"><br>
+                <input class="myInput" type="text" id="place" name="place" placeholder="London"><br>
                 <label class="heading" for="date">Departure Date:</label>
                 <input class="myInput" type="date" id="departure-date" min="" max="" name="departure-date"><br>
                 <label class="heading" for="date">Return Date:</label>
@@ -21,7 +21,7 @@
                 <input type="submit" id="search" value="Submit">
             </div>
 
-            <div class="holder output">
+            <div class="three holder output">
                 <div class="heading title">Most Recent Entry:</div>
                 <div id="entryHolder">
                     <!-- Data placeholder -->
