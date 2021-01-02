@@ -257,13 +257,32 @@ const updateUI = async () => {
         const allData = await request.json();
         console.log(allData);
         document.getElementById('countdown').innerHTML = `Your Trip Duration is: ${tripLength} Days`;
-        document.getElementById('latitude').innerHTML = `The Latitude is: ${allData.longitude}`;
-        document.getElementById('longitude').innerHTML = `The Longitude is: ${allData.longitude}`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
-        document.getElementById('weather').innerHTML = `The Weather is: ${allData.weather}`;
-        document.getElementById('temperature').innerHTML = `The Current Temperature is: ${allData.temperature}`;
-        document.getElementById('forecast-weather').innerHTML = `The Forecasted Weather is: ${allData.forecastWeather}`;
-        document.getElementById('forecast-temperature').innerHTML = `The Forecasted Temperature is: ${allData.forecastTemperature}`;
+        
+        let cWeather = document.getElementById('weather');
+        let cTemperature = document.getElementById('temperature');
+        let fWeather = document.getElementById('forecast-weather');
+        let fTemperature = document.getElementById('forecast-temperature');
+
+        if(withinAWeek){
+            fWeather.classList.add('hide');
+            fTemperature.classList.add('hide');
+            cWeather.classList.remove('hide');
+            cTemperature.classList.remove('hide');
+        }
+
+        if(!withinAWeek){
+            cWeather.classList.add('hide');
+            cTemperature.classList.add('hide');
+            fWeather.classList.remove('hide');
+            fTemperature.classList.remove('hide');
+        }
+
+        cWeather.innerHTML = `The Weather is: ${allData.weather}`;
+        cTemperature.innerHTML = `The Current Temperature is: ${allData.temperature}`;        
+        fWeather.innerHTML = `The Forecasted Weather is: ${allData.forecastWeather}`;
+        fTemperature.innerHTML = `The Forecasted Temperature is: ${allData.forecastTemperature}`;
+        
         document.getElementById('place-image').setAttribute("src", allData.imageSource);
     } catch(error) {
         console.log("error", error);
