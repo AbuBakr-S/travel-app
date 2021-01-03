@@ -25,7 +25,8 @@
     "terser-webpack-plugin": "^5.0.3",
     "webpack": "^5.5.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "workbox-webpack-plugin": "^6.0.2"
   },
   "scripts": {
     "test": "jest",
