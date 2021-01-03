@@ -294,4 +294,4 @@ const updateUI = async () => {
 };
 
 
-export {getPlaceName, getLocation, getWeather, performAction, tripCountdown, updateUI};
+export {isSingleDigit, getPlaceName, getLocation, getWeather, performAction, tripCountdown, tripDuration, getImage, updateUI};
