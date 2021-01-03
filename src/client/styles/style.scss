@@ -61,14 +61,9 @@ label, button {
     border-style: none;
     font-family: 'Staatliches', cursive;
     letter-spacing: 1px;
-}
-
-button {
-    margin: 0 auto;
-    color: #f9c102;
-    background-color: #000;
-    height: 30px;
-    width: 10%;
+    &:hover {
+        box-shadow: 0px 0px 2.5px 2.5px #736f4e;
+    }
 }
 
 input[type=submit] {
@@ -79,6 +74,9 @@ input[type=submit] {
     padding: 5px 20px;
     letter-spacing: 1px;
     border-style: none;
+    &:hover {
+        color: #000;
+    }
 }
 
 .output {
