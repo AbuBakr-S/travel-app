@@ -26,18 +26,19 @@ const dateComponentsObject = {
 const isSingleDigit = (dateNum) => {
   let dateNumAsString = dateNum.toString();
   if(dateNumAsString.length < 2){
-    const sanitisedDateString = ("0" + dateNum).slice(-2);
-    return sanitisedDateString;
+    dateNumAsString = ("0" + dateNum).slice(-2);
+    //const sanitisedDateString = ("0" + dateNum).slice(-2);
+    return dateNumAsString;
   } else {
     return dateNumAsString;
   }
 }
 
 // Store formatted date components 
-const formattedCurrentMonth = isSingleDigit(dateComponentsObject.currentMonth.toString());
-const formattedCurrentDate = isSingleDigit(dateComponentsObject.currentDate.toString());
-const formattedForecastWeatherMonth = isSingleDigit(dateComponentsObject.forecastWeatherMonth.toString());
-const formattedForecastWeatherDate = isSingleDigit(dateComponentsObject.forecastWeatherDate.toString());
+const formattedCurrentMonth = isSingleDigit(dateComponentsObject.currentMonth);
+const formattedCurrentDate = isSingleDigit(dateComponentsObject.currentDate);
+const formattedForecastWeatherMonth = isSingleDigit(dateComponentsObject.forecastWeatherMonth);
+const formattedForecastWeatherDate = isSingleDigit(dateComponentsObject.forecastWeatherDate);
 
 // Build YYYY-MM-DD format for min and max attributes
 const currentDateString = `${dateComponentsObject.currentYear}-${formattedCurrentMonth}-${formattedCurrentDate}`;
