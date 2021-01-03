@@ -45,13 +45,14 @@ const currentDateString = `${dateComponentsObject.currentYear}-${formattedCurren
 const futureDateString = `${dateComponentsObject.forecastWeatherYear}-${formattedForecastWeatherMonth}-${formattedForecastWeatherDate}`;
 
 // Set min and max values on date picker
-document.getElementById('departure-date').setAttribute('min', currentDateString);
-document.getElementById('departure-date').setAttribute('max', futureDateString);
-document.getElementById('return-date').setAttribute('min', currentDateString);
+window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('departure-date').setAttribute('min', currentDateString);
+    document.getElementById('departure-date').setAttribute('max', futureDateString);
+    document.getElementById('return-date').setAttribute('min', currentDateString);
 
-//  Make a GET request on click
-document.getElementById('search').addEventListener('click', performAction);
-
+    //  Make a GET request on click
+    document.getElementById('search').addEventListener('click', performAction);
+});
 
 // Geonames - GET Request
 const getPlaceName = async(baseURL, placeName, apiKey) => {

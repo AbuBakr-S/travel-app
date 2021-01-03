@@ -9,5 +9,7 @@ describe("Testing whether the function correctly modifies a single digit number 
            // Define the expected output, if any, in the form of variables/array
            // The expect() function, in combination with a Jest matcher, is used to check if the function produces the expected output
            // The general syntax is `expect(myFunction(arg1, arg2, ...)).toEqual(expectedValue);`, where `toEqual()` is a matcher
+
+           // Use REGEX to represent a double digit
            expect(isSingleDigit(9)).toMatch(/([0]\d)/);
 })});
