@@ -19,7 +19,7 @@ body, .myInput, input[type=submit] {
 .wrapper {
     display: grid;
     grid-column: 1;
-    max-width: 1250px;
+    max-width: 650px;
     margin: 0 auto;
 }
 
@@ -31,7 +31,7 @@ body, .myInput, input[type=submit] {
 
 .two {
     background-color: #e07a5f;
-    padding: 5% 0;
+    padding: 5% 10%;
     font-size: 1.2rem;
 }
 
@@ -50,12 +50,12 @@ label {
 }
 
 .myInput {
-    min-width: 250px;
-    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
     font-size: 1rem;
     margin-bottom: 1.5rem;
     border-radius: 10px;
-    padding: 0.5rem 0.8rem;
+    padding: 0.5rem;
     border-style: none;
     letter-spacing: 0.1rem;
     &:hover {
@@ -64,10 +64,11 @@ label {
 }
 
 input[type=submit] {
+    width: 60%;
     font-size: 1.2rem;
     background-color: #736f4e;
     color: #f4f1de;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     letter-spacing: 0.1rem;
     border-style: none;
     &:hover {
