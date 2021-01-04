@@ -6,7 +6,8 @@ In this project I built an asynchronous web app called Trip Planner. The user en
 A key part of this project was handling dates and so I created a date object to store the date components to avoid duplication and improve reusability. The output data gathered has also been stored in a single endpoint on the server.
 
 ## How to Run The Project
-
+- In Development Mode - `npm run build-dev` 
+- In Production Mode - `npm run build-prod`
 
 ## Additional Functionality
 To extend my project, I decided to add the end date and display length of the trip.
