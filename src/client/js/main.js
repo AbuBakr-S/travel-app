@@ -162,7 +162,6 @@ const tripCountdown = (dateDepart) => {
     const diff = date2 - date1;
     const elapsed = diff / (1000*60*60*24);
     window.elapsed = elapsed;
-    console.log(`Elapsed value is: ${elapsed}`);
 
     // Date of user submission in milliseconds
     let d1 = Date.now();
@@ -202,11 +201,7 @@ const tripDuration = (dateReturn) => {
     
     // Calculate duration in days from milliseconds
     const tripLength = diff / (1000*60*60*24);
-    console.log(tripLength);
     window.tripLength = tripLength;
-
-    // Print date object
-    console.log(dateComponentsObject);
 }
 
 
@@ -216,14 +211,12 @@ let pixabayBaseURL = new URL ('https://pixabay.com/api/');
 
 const getImage = async(baseURL, imageSearch) => {
     pixabayBaseURL.searchParams.append("key", pixabayApiKey);
-    console.log(imageSearch);
     pixabayBaseURL.searchParams.append("q", imageSearch);
     pixabayBaseURL.href;
 
     const res = await fetch(pixabayBaseURL);
     try {
         const imageData = await res.json();
-        console.log(imageData.hits[0].webformatURL);
         return imageData;
     } catch(error) {
         console.log("error", error);
