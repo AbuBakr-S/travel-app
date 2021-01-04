@@ -12,6 +12,7 @@ body {
     grid-template-columns: 1;
     grid-auto-rows: minmax(100px, auto);
     max-width: 1250px;
+
 }
 
 .one {
@@ -93,6 +94,6 @@ input[type=submit] {
 }
 
 .responsive {
-    width: 640px;
+    max-width: 640px;
     height: auto;
 }
