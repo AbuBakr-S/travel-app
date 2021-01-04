@@ -201,6 +201,7 @@ const tripDuration = (dateReturn) => {
     
     // Calculate duration in days from milliseconds
     const tripLength = diff / (1000*60*60*24);
+    Math.floor(tripLength);
     window.tripLength = tripLength;
 }
 
