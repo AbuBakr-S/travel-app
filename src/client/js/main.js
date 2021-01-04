@@ -111,7 +111,6 @@ async function performAction(e) {
     currentWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/current');
     forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily');
     tripCountdown(dateDepart);
-    console.log(`The Trip is Within a Week: ${withinAWeek}`);
 
     let data = await getPlaceName(baseURL, placeName, apiKey);
     await postData('/place', {latitude: data.geonames[0].lat, longitude: data.geonames[0].lng, country: data.geonames[0].countryName});
@@ -173,10 +172,8 @@ const tripCountdown = (dateDepart) => {
     let difference = d2 - d1;
     
     if (difference < 518400000) {
-        //console.log('Within a week. Provide current weather forecast');
         return withinAWeek = true;
     } else {
-        //console.log('More than 1 week. Proivide predicted weather forecast');
         return withinAWeek = false;
     }
 }
@@ -197,7 +194,6 @@ const tripDuration = (dateReturn) => {
     
     // Calculate difference between milliseconds
     const diff = date2 - date1;
-    console.log(diff);
     
     // Calculate duration in days from milliseconds
     const tripLength = diff / (1000*60*60*24);
@@ -251,7 +247,6 @@ const updateUI = async () => {
     const request = await fetch('/all');
     try {
         const allData = await request.json();
-        console.log(allData);
         document.getElementById('countdown').innerHTML = `Your Trip Duration is: ${tripLength} Days`;
         document.getElementById('countryName').innerHTML = `Your Country Name is: ${allData.country}`;
         
