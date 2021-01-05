@@ -84,3 +84,7 @@ function sendData (req, res) {
     console.log(projectData);
     res.send(projectData);
 };
+
+
+// To use in tests
+module.exports = app;
