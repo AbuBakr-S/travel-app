@@ -108,8 +108,8 @@ async function performAction(e) {
     const dateReturn = document.getElementById('return-date').value;
 
     // Reset URL to prevent apending values from additional submissions
-    currentWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/current');
-    forecastWeatherBaseURL = new URL ('http://api.weatherbit.io/v2.0/forecast/daily');
+    currentWeatherBaseURL = new URL ('https://cors-anywhere.herokuapp.com/http://api.weatherbit.io/v2.0/current');
+    forecastWeatherBaseURL = new URL ('https://cors-anywhere.herokuapp.com/http://api.weatherbit.io/v2.0/forecast/daily');
     tripCountdown(dateDepart);
 
     let data = await getPlaceName(baseURL, placeName, apiKey);
