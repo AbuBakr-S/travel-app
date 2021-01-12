@@ -1,5 +1,5 @@
 // Geonames API call
-const baseURL = 'http://api.geonames.org/search?name='; 
+const baseURL = 'https://secure.geonames.org/search?name='; 
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
 // Weatherbit API call
