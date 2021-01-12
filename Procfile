@@ -1,1 +1,1 @@
-web: npm run build-prod
+web: node src/server/server.js
