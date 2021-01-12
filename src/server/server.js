@@ -22,7 +22,7 @@ app.use(express.static('dist'));
 
 
 // Setup server
-const port = 8000;
+const port = process.env.PORT || 8000;      // Heroku port or 8000 locally
 const server = app.listen(port, listening);
 function listening() {
     console.log(`Running on localhost: ${port}`);
