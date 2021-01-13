@@ -2,8 +2,6 @@
 const baseURL = 'https://secure.geonames.org/search?name='; 
 const apiKey = '&maxRows=1&type=json&username=as20';   
 
-https://api.weatherbit.io/v2.0/current
-
 // Weatherbit API call
 let currentWeatherBaseURL = new URL ('https://api.weatherbit.io/v2.0/current');
 let forecastWeatherBaseURL = new URL ('https://api.weatherbit.io/v2.0/forecast/daily'); // Example: http://api.weatherbit.io/v2.0/forecast/daily?lat=51.509865&lon=-0.118092&key=8fcdb754804e4825afbd72eb47d12818
