@@ -1,5 +1,5 @@
 html {
-    font-size: 16px;
+    font-size: 32px;
 }
 
 body {
@@ -49,6 +49,7 @@ label {
 
 .myInput {
     width: 100%;
+    height: 3rem;
     box-sizing: border-box;
     font-size: 1rem;
     margin-bottom: 1.5rem;
@@ -63,7 +64,7 @@ label {
 
 input[type=submit] {
     width: 60%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     background-color: #736f4e;
     color: #f4f1de;
     padding: 0.5rem;
@@ -75,7 +76,7 @@ input[type=submit] {
 }
 
 #entryHolder {
-    min-height: 10rem;
+    min-height:10vh;
     color: #3d405b;
 }
 
@@ -90,6 +91,11 @@ input[type=submit] {
 
 
 @media only screen and (min-width: 992px) {
+
+    html {
+        font-size: 16px;
+    }
+
     .wrapper {
         max-width: 650px;
     }
